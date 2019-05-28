@@ -1,0 +1,17 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "amd",
+        "sourceMap": true,
+        "target": "es2016",
+        "moduleResolution": "node",
+        "allowJs": true
+    },
+    "include": [
+        "./*",
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

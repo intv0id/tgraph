@@ -1,0 +1,56 @@
+language: node_js
+dist: xenial
+
+node_js:
+  - "10"
+
+cache:
+  directories:
+    - node_modules
+
+jobs:
+  include:
+    - stage: "Generate documentation"
+      install:
+        - npm install typedoc --global
+        
+      before_script:
+        - cd tgraph
+        - npm install
+        - cd ..
+
+      script:
+        - typedoc --out docs tgraph
+
+      deploy:
+        - provider: pages
+          skip_cleanup: true
+          local_dir: docs/
+          github_token: $GITHUB_TOKEN
+
+    - stage: "Bundle package"
+      before_script:
+        - cd tgraph
+        - npm install
+
+      script:
+        - npm run build
+
+      after_success:
+        - npm pack
+      
+      deploy:
+        - provider: npm
+          skip_cleanup: true
+          email: "clement.trassoudaine@eurecom.fr"
+          api_key: $NPM_TOKEN
+          on:
+            tags: true
+            
+        - provider: releases
+          api_key: $GITHUB_TOKEN
+          file_glob: true
+          file: "tgraph-*.tgz"
+          skip_cleanup: true
+          on:
+            tags: true

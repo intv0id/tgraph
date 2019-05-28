@@ -1,0 +1,37 @@
+{
+  "name": "tgraph",
+  "version": "1.0.0",
+  "description": "A typescript package for plotting 3D graphs.",
+  "main": "webpack.config.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.29",
+    "jquery": "^3.4.1",
+    "lodash": "^4.17.11",
+    "math": "^0.0.3",
+    "three": "^0.71.1",
+    "three-trackballcontrols": "0.0.7"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.0.2",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.5.1",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intv0id/tgraph.git"
+  },
+  "author": "Clément Trassoudaine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/intv0id/tgraph/issues"
+  },
+  "homepage": "https://github.com/intv0id/tgraph#readme"
+}
