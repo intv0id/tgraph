@@ -1,6 +1,6 @@
 {
   "name": "tgraph",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A typescript package for plotting 3D graphs.",
   "main": "webpack.config.js",
   "directories": {
@@ -33,5 +33,12 @@
   "bugs": {
     "url": "https://github.com/intv0id/tgraph/issues"
   },
-  "homepage": "https://github.com/intv0id/tgraph#readme"
+  "homepage": "https://github.com/intv0id/tgraph#readme",
+  "keywords": [
+    "3D",
+    "graph",
+    "visualization",
+    "interactive",
+    "typescript"
+  ]
 }
