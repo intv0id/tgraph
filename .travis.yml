@@ -12,7 +12,6 @@ jobs:
   include:
     - stage: "Generate documentation"
       install:
-        - npm install typescript@3.1.1 --global
         - npm install typedoc --global
         
       before_script:

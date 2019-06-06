@@ -3,3 +3,4 @@ node_modules/
 build/
 .mypy_cache/
 dist/
+docs/
