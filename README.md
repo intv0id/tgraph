@@ -8,6 +8,8 @@ A typescript library for drawing 3D graphs
 
 This module aims to draw an interactive and modular representation of information networks.
 
+For python jupyter notebooks use, please refer to [pytgraph](https://github.com/intv0id/pytgraph).
+
 
 
 # Usage
