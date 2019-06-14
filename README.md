@@ -84,7 +84,6 @@ Feel free to get involved in this project and submit your pull requests. If you 
 
 * [ ] Documentation
 * [ ] Unit tests
-* [ ] Continuous intgration
 * [ ] Python & jupyter notebook/lab module
 
 # Credits
