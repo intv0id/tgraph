@@ -31,6 +31,10 @@ export class GraphOptions {
 }
 
 class Deserializable {
+    serialize() {
+        return this;
+    }
+
     deserialize(json) {
         for (let prop in json) {
             if (!json.hasOwnProperty(prop) || !this.hasOwnProperty(prop)) {
@@ -95,6 +99,14 @@ export class Graph extends Deserializable {
         this.nodes = nodes;
         this.edges = edges;
         this.directed = directed;
+    }
+
+    serialize() {
+        return {
+            nodes: this.nodes.serialize(),
+            edges: this.edges.serialize(),
+            directed: this.directed,
+        }
     }
 
     deserialize(json) {
