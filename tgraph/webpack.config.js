@@ -1,7 +1,7 @@
 const path = require('path');
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, 'index.ts'),
+  entry: path.join(__dirname, 'index.d.ts'),
   output: {
     library: 'tgraph',
     libraryTarget: "umd",
