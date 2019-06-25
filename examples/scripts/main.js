@@ -1,7 +1,7 @@
 require.config({
     paths: {
-        "jquery": "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min",
-        "tgraph": "../../tgraph/dist/tgraph.bundle"
+        "jquery": "https://code.jquery.com/jquery-3.4.1.min",
+        "tgraph": "../../dist/tgraph.bundle"
     }
 });
 

@@ -5,6 +5,7 @@ import * as $ from "jquery";
 import { NodeMesh, EdgeMesh, ArrowMesh, GraphEdge, GraphNode, Graph, GraphOptions } from "./graphTypes";
 import { Optimizer } from "./optimizer";
 import { makeMaterial, extend } from "./utils";
+import { Material } from 'three';
 
 export class GraphView {
     $s: JQuery<HTMLElement>;
@@ -23,10 +24,10 @@ export class GraphView {
     nodes: NodeMesh[] = [];
     edges: EdgeMesh[] = [];
     arrows: ArrowMesh[] = [];
-    directed: boolean;
+    directed: boolean = true;
 
-    nodeNameToPosition = {};
-    selectedNode: NodeMesh = undefined;
+    nodeNameToPosition: Map<string, number> = new Map<string, number>();
+    selectedNode: NodeMesh | undefined = undefined;
 
 
 
@@ -34,11 +35,11 @@ export class GraphView {
         this.$s = $(selector);
         this.options = options;
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setSize(this.$s.width(), this.$s.height());
+        this.renderer.setSize(this.$s.width() || 0, this.$s.height() || 1);
         this.$s.append(this.renderer.domElement);
 
-        this.camera = new THREE.PerspectiveCamera(70, this.$s.width() / this.$s.height());
-        this.camera.position.z = this.options.z;
+        this.camera = new THREE.PerspectiveCamera(70, (this.$s.width() || 0) / (this.$s.height() || 1));
+        this.camera.position.setZ(this.options.z);
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
         this.controls.rotateSpeed = this.options.rotateSpeed;
 
@@ -62,7 +63,7 @@ export class GraphView {
         this.camera.add(this.directionalLight);
 
 
-        $(window).resize(this.onResize);
+        $(window).resize(this.onResize.bind(this));
 
         if (this.options.showSave) {
             this.showSave();
@@ -80,19 +81,19 @@ export class GraphView {
     }
 
     onResize() {
-        this.renderer.setSize(this.$s.width(), this.$s.height());
-        this.camera.aspect = this.$s.width() / this.$s.height();
+        this.renderer.setSize(this.$s.width() || 0, this.$s.height() || 1);
+        this.camera.aspect = (this.$s.width() || 0) / (this.$s.height() || 1);
         this.camera.updateProjectionMatrix();
     }
 
-    onNodeClick(event) {
+    onNodeClick(event: any) {
         let intersects = this.cursorIntersects(event);
         if (intersects.length !== 0) {
             this.options.onNodeClickAction(intersects[0].object);
         }
     }
 
-    onNodeHover(event) {
+    onNodeHover(event: any) {
         let intersects = this.cursorIntersects(event);
         if (intersects.length === 0) {
             if (this.selectedNode !== undefined) {
@@ -101,32 +102,39 @@ export class GraphView {
         } else {
             // Move from empty to node
             if (this.selectedNode === undefined) {
-                this.selectNode(intersects[0].object)
+                this.selectNode(<NodeMesh>intersects[0].object)
                 // Move between nodes
             } else if (this.selectedNode !== intersects[0].object) {
                 this.unselectNode();
-                this.selectNode(intersects[0].object);
+                this.selectNode(<NodeMesh>intersects[0].object);
             }
         }
     }
 
     unselectNode() {
-        this.selectedNode.material.color = this.selectedNode.color;
-        this.selectedNode.needsUpdate = true;
-        this.options.onExitHover(this.selectedNode);
+        if (this.selectedNode !== undefined) {
+            if (this.selectedNode.material instanceof Material) {
+                console.log(this.selectedNode.material)
+                this.selectedNode.material.color = new THREE.Color(parseInt(this.selectedNode.color, 16)) ;
+                this.selectedNode.material.needsUpdate = true;
+                console.log(this.selectedNode.material)
+            }
+            this.options.onExitHover(this.selectedNode);
+        }
         this.selectedNode = undefined;
     }
 
-    selectNode(node) {
+    selectNode(node: NodeMesh) {
         this.selectedNode = node;
-        this.selectedNode.material.color = this.selectedNode.hoverColor;
-        this.selectedNode.needsUpdate = true;
+        if (this.selectedNode.material instanceof Material) {
+            this.selectedNode.material.color = new THREE.Color(parseInt(this.selectedNode.hoverColor, 16));
+            this.selectedNode.material.needsUpdate = true;
+        }
         this.options.onEnterHover(this.selectedNode);
     }
 
 
-
-    cursorIntersects(event) {
+    cursorIntersects(event: any) {
         let mouse = new THREE.Vector2();
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
@@ -142,16 +150,16 @@ export class GraphView {
         let material = makeMaterial(node.color, this.options.shader);
         let mesh = new THREE.Mesh(this.sphereGeometry, material);
         mesh.name = node.name;
-        mesh.position.fromArray(node.location);
+        mesh.position.set(node.location.x, node.location.y, node.location.z);
         mesh.scale.set(node.size, node.size, node.size);
         this.scene.add(mesh);
-        this.nodeNameToPosition[node.name] = this.nodes.length;
+        this.nodeNameToPosition.set(node.name, this.nodes.length);
         this.nodes.push(extend(node, mesh));
     }
 
     drawEdge(edge: GraphEdge) {
-        let srcNode = this.nodes[this.nodeNameToPosition[edge.src]];
-        let dstNode = this.nodes[this.nodeNameToPosition[edge.dst]];
+        let srcNode = this.nodes[this.nodeNameToPosition.get(edge.src)];
+        let dstNode = this.nodes[this.nodeNameToPosition.get(edge.dst)];
         let material = makeMaterial(edge.color, this.options.shader);
         let mesh = new THREE.Mesh(this.cylinderGeometry, material);
         mesh.position.addVectors(srcNode.position, dstNode.position).divideScalar(2.0);
@@ -159,8 +167,6 @@ export class GraphView {
         mesh.scale.set(edge.size, edge.size, dstNode.position.distanceTo(srcNode.position));
 
         // Save array-index references to nodes, mapping from object structure
-        mesh.source = srcNode;
-        mesh.target = dstNode;
         this.scene.add(mesh);
         this.edges.push(extend(edge, mesh));
 
@@ -209,8 +215,8 @@ export class GraphView {
 
     save() {
         let renderWidth = 2560 / (window.devicePixelRatio || 1);
-        let w = this.$s.width();
-        let h = this.$s.height();
+        let w = this.$s.width() || 1;
+        let h = this.$s.height() || 0;
         this.renderer.setSize(renderWidth, renderWidth * h / w);
         this.renderer.render(this.scene, this.camera);
         let link = document.createElement('a');

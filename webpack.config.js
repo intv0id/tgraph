@@ -1,7 +1,7 @@
 const path = require('path');
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, 'index.d.ts'),
+  entry: path.join(__dirname, 'src/index.ts'),
   output: {
     library: 'tgraph',
     libraryTarget: "umd",
@@ -11,16 +11,17 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.tsx?$/,
+      test: /\.ts$/,
       include: [
-        path.resolve(__dirname)
+        path.join(__dirname, 'src')
       ],
       exclude: /node_modules/,
       loader: 'ts-loader',
+      options: { allowTsInNodeModules: true },
     }]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: ['.ts', '.js' ]
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
 };

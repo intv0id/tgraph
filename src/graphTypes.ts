@@ -1,41 +1,51 @@
 import * as THREE from 'three';
-import { makeMaterial } from "./utils"
 
 export class GraphOptions {
     runOptimization: boolean = true;
     shader: string = "basic";
     showSave: boolean = true;
     z: number = 100;
-    rotateSpeed: number = 0.5;
+    rotateSpeed: number = 1;
     nodeSize: number = 2.0;
-    edgeSize: number = 0.25;
-    arrowSize: number = 1.0;
+    edgeSize: number = 0.5;
+    arrowSize: number = 2;
     clickableNodes: boolean = true;
     hoverableNodes: boolean = true;
 
-    onExitHover: Function = function (node:NodeMesh) {
+    onExitHover: Function = function (node: NodeMesh) {
         let $d = $('.label');
         $d.empty();
         $d.hide();
     }
 
-    onEnterHover: Function = function (node:NodeMesh) {
+    onEnterHover: Function = function (node: NodeMesh) {
         let $d = $('.label');
         $d.html(`<p><b>${node.name}</b></p><br><p>${node.label}</p>`);
         $d.show();
     }
 
-    onNodeClickAction: Function = function (nodeObject) {
+    onNodeClickAction: Function = function (nodeObject: NodeMesh) {
         window.open(nodeObject.url, '_blank');
     }
 }
 
-class Deserializable {
-    serialize():any {
+interface IDeserializable {
+    serialize: () => void;
+    deserialize: (json: any) => void;
+}
+
+class Deserializable implements IDeserializable {
+    serialize(): any {
         return this;
     }
 
-    deserialize(json) {
+    deserialize(json: any): void {
+        return;
+    }
+}
+
+class DefaultDeserializable extends Deserializable {
+    deserialize(json: any): void {
         for (let prop in json) {
             if (!json.hasOwnProperty(prop) || !this.hasOwnProperty(prop)) {
                 continue;
@@ -51,15 +61,19 @@ class Deserializable {
     }
 }
 
-export class GraphNode extends Deserializable {
+
+
+export class GraphNode extends DefaultDeserializable {
     name: string;
     color: string;
     hoverColor: string;
     label: string;
     size: number;
-    location: number[];
+    location: THREE.Vector3;
+    url: string;
+    force: THREE.Vector3;
 
-    constructor(name: string = "", color: string = '0x5bc000', hoverColor: string = '0x5bc0ff', label: string = "", size: number = 2.0, location: number[] = [0, 0, 0]) {
+    constructor(name: string = "", color: string = '0x5bc000', hoverColor: string = '0x5bc0ff', label: string = "", size: number = 2.0, location: THREE.Vector3 = new THREE.Vector3(0, 0, 0), url: string = "", force: THREE.Vector3 = new THREE.Vector3()) {
         super()
         this.name = name;
         this.color = color;
@@ -67,10 +81,12 @@ export class GraphNode extends Deserializable {
         this.label = label;
         this.size = size;
         this.location = location;
+        this.url = url;
+        this.force = force;
     }
 }
 
-export class GraphEdge extends Deserializable {
+export class GraphEdge extends DefaultDeserializable {
     color: string;
     hoverColor: string;
     size: number;
@@ -101,7 +117,7 @@ export class Graph extends Deserializable {
         this.directed = directed;
     }
 
-    serialize():any {
+    serialize(): any {
         return {
             nodes: this.nodes.map(x => x.serialize()),
             edges: this.edges.map(x => x.serialize()),
@@ -109,18 +125,18 @@ export class Graph extends Deserializable {
         }
     }
 
-    deserialize(json) {
+    deserialize(json: any) {
         for (let prop in json) {
             switch (prop) {
                 case "nodes":
-                    this[prop] = json[prop].map(element => {
+                    this[prop] = json[prop].map((element: any) => {
                         let object = new GraphNode();
                         object.deserialize(element);
                         return object;
                     });
                     break;
                 case "edges":
-                    this[prop] = json[prop].map(element => {
+                    this[prop] = json[prop].map((element: any) => {
                         let object = new GraphEdge();
                         object.deserialize(element);
                         return object;

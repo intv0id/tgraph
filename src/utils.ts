@@ -13,8 +13,8 @@ export function makeMaterial(color: string, shaderName: string = "basic"): THREE
     return material
 }
 
-function getAllPropertyNames(obj) {
-    var props = [];
+function getAllPropertyNames(obj: any) {
+    let props: string[] = [];
 
     do {
         Object.getOwnPropertyNames(obj).forEach(function (prop) {

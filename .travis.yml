@@ -30,7 +30,6 @@ jobs:
 
     - stage: "Bundle package"
       before_script:
-        - cd tgraph
         - npm install
 
       script:

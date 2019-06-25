@@ -34,8 +34,8 @@ while queue:
     if user in g["nodes"]:
         continue
     sys.stderr.write(f"Traversing {user}.\n")
-    in_deg = requests.get(f"https://api.github.com/users/{user}", auth=auth).json()["followers"]
-    g["nodes"].append({"followers": in_deg, "name": user})
+    json_result = requests.get(f"https://api.github.com/users/{user}", auth=auth).json()
+    g["nodes"].append({"size": pow(json_result["followers"], 1/3), "name": user, "url": f"https://github.com/{user}"})
     if parent:
         g["edges"].append({"src": parent, "dst": user})
     followed = [res["login"] for res in requests.get(f"https://api.github.com/users/{user}/following", auth=auth).json()]

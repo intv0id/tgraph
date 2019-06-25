@@ -1,22 +1,23 @@
 import * as THREE from 'three';
 
 import { NodeMesh, EdgeMesh, ArrowMesh } from "./graphTypes";
+import { isUndefined } from 'util';
 
 
 export class Optimizer {
-    nodes: NodeMesh
-    edges: EdgeMesh;
-    arrows: ArrowMesh;
+    nodes: NodeMesh[];
+    edges: EdgeMesh[];
+    arrows: ArrowMesh[];
     directed: boolean;
-    nodeNameToPosition: Object;
+    nodeNameToPosition: Map<string, number>;
     iterations: number;
     forceStrength: number;
-    dampening: number;
-    maxVelocity: number;
-    maxDistance: number;
-    delta: THREE.Vector3;
+    dampening: number = 0;
+    maxVelocity: number = 0;
+    maxDistance: number = 0;
+    delta: THREE.Vector3 =  new THREE.Vector3();
 
-    constructor(nodes: NodeMesh[], edges: EdgeMesh[], arrows: ArrowMesh[], directed: boolean, nodeNameToPosition: Object, iterations: number = 10000, forceStrength: number = 10.0) {
+    constructor(nodes: NodeMesh[], edges: EdgeMesh[], arrows: ArrowMesh[], directed: boolean, nodeNameToPosition: Map<string, number>, iterations: number = 10000, forceStrength: number = 10.0) {
         this.nodes = nodes;
         this.edges = edges;
         this.arrows = arrows;
@@ -73,8 +74,17 @@ export class Optimizer {
 
         // Add Hooke-esque edge spring forces
         for (let j = 0; j < this.edges.length; j += 1) {
-            let n1 = this.nodes[this.nodeNameToPosition[this.edges[j].src]];
-            let n2 = this.nodes[this.nodeNameToPosition[this.edges[j].dst]];
+            let src = this.nodeNameToPosition.get(this.edges[j].src);
+            let dst = this.nodeNameToPosition.get(this.edges[j].dst);
+            if (src === undefined) {
+                console.error(`Source node ${this.edges[j].src} not found`);
+                continue;
+            } else if (dst === undefined) {
+                console.error(`Destination node ${this.edges[j].dst} not found`);
+                continue;
+            }
+            let n1 = this.nodes[src];
+            let n2 = this.nodes[dst];
 
             this.delta.subVectors(n2.position, n1.position);
             let mag = this.delta.length();
@@ -97,13 +107,23 @@ export class Optimizer {
             n1.force.setY(THREE.Math.clamp(n1.force.y, -this.maxVelocity, this.maxVelocity));
             n1.force.setZ(THREE.Math.clamp(n1.force.z, -this.maxVelocity, this.maxVelocity));
 
-            n1.position.add(n1.force);
+            n1.position.add(n1.force); 
             n1.force.set(0, 0, 0);
         }
         for (let j = 0; j < this.edges.length; j += 1) {
             let e = this.edges[j];
-            let n1 = this.nodes[this.nodeNameToPosition[e.src]];
-            let n2 = this.nodes[this.nodeNameToPosition[e.dst]];
+            let src = this.nodeNameToPosition.get(e.src);
+            let dst = this.nodeNameToPosition.get(e.dst);
+            if (src === undefined) {
+                console.error(`Source node ${this.edges[j].src} not found`);
+                continue;
+            } else if (dst === undefined) {
+                console.error(`Destination node ${this.edges[j].dst} not found`);
+                continue;
+            }
+            let n1 = this.nodes[src];
+            let n2 = this.nodes[dst];
+
             let mag = n2.position.distanceTo(n1.position);
             e.position.addVectors(n1.position, n2.position).divideScalar(2.0);
             e.lookAt(n2.position);
