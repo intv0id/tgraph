@@ -19,7 +19,7 @@ jobs:
 
       script:
         - mkdir docs
-        - cp -r examples docs/
+        - cp -r examples dist docs/
     #     - typedoc --out docs tgraph
 
       deploy:
