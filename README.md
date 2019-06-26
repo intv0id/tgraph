@@ -31,8 +31,8 @@ var jsonFileName = ... ;
 
 require.config({
     paths: {
-        "jquery": ...,
-        "tgraph": ...
+        "jquery": "https://code.jquery.com/jquery-3.4.1.min",
+        "tgraph": "https://unpkg.com/tgraph/dist/tgraph.bundle",
     }
 });
 
