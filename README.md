@@ -3,8 +3,9 @@ tgraph
 
 A typescript library for drawing 3D graphs
 ---
-
-[![Build Status](https://travis-ci.org/intv0id/tgraph.svg?branch=master)](https://travis-ci.org/intv0id/tgraph)
+[![NPM version][npm-image]][npm-url]
+[![NPM downloads][npm-downloads]][npm-url]
+[![Build Status][travis-image]][travis-url]
 
 This module aims to draw an interactive and modular representation of information networks.
 
@@ -92,3 +93,9 @@ Feel free to get involved in this project and submit your pull requests. If you 
 # Credits
 
 This module is based on the [jgraph](https://github.com/patrickfuller/jgraph) work and is under the MIT License.
+
+[npm-image]: https://img.shields.io/npm/v/tgraph.svg
+[npm-downloads]: https://img.shields.io/npm/dt/tgraph.svg
+[npm-url]: https://www.npmjs.com/package/tgraph
+[travis-url]: https://travis-ci.org/intv0id/tgraph
+[travis-image]: https://travis-ci.org/intv0id/tgraph.svg?branch=master
