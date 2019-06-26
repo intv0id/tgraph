@@ -18,6 +18,8 @@ Examples are provided [here](https://github.com/intv0id/tgraph/tree/master/examp
 
 ## Minimal code
 
+* Javascript
+
 ``` js
 
 var jsonFileName = ... ;
