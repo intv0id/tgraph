@@ -18,11 +18,8 @@ require(["jquery", "tgraph"], function (jquery, tgraph) {
         }
         options.onEnterHover = function (node) {
             let $d = $('.label');
-            $d.html(`<p><b>${node.name}</b></p><br><p>${node.label}</p><br><p>hover ${node.hoverColor}</p><br><p>normal ${node.color}</p>`);
+            $d.html(`<p><b>${node.name}</b></p><br><p>${node.label}</p>`);
             $d.show();
-        }
-        options.onNodeClickAction = function (node) {
-            console.log(node.material);
         }
         let graphView = new tgraph.GraphView('.graph', options);
         graphView.draw(graph);

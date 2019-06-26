@@ -10,7 +10,9 @@ This module aims to draw an interactive and modular representation of informatio
 
 For python jupyter notebooks use, please refer to [pytgraph](https://github.com/intv0id/pytgraph).
 
+**Example**
 
+[![Example graph screenshot](examples/images/GithubFollowersGraph.png)](https://intv0id.github.io/tgraph/examples/github.html)
 
 # Usage
 
