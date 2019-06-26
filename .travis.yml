@@ -18,7 +18,7 @@ jobs:
         - npm install
 
       script:
-        - cp examples/ docs/examples
+        - cp -r examples docs/examples
     #     - typedoc --out docs tgraph
 
       deploy:
