@@ -18,6 +18,7 @@ jobs:
         - npm install
 
       script:
+        - npm run build
         - mkdir docs
         - cp -r examples dist docs/
     #     - typedoc --out docs tgraph
