@@ -10,23 +10,22 @@ cache:
 
 jobs:
   include:
-    # - stage: "Generate documentation"
-    #   install:
-    #     - npm install typedoc --global
+    - stage: "Generate documentation"
+      install:
+        - npm install typedoc --global
         
-    #   before_script:
-    #     - cd tgraph
-    #     - npm install
-    #     - cd ..
+      before_script:
+        - npm install
 
-    #   script:
+      script:
+        - cp examples/ docs/examples
     #     - typedoc --out docs tgraph
 
-    #   deploy:
-    #     - provider: pages
-    #       skip_cleanup: true
-    #       local_dir: docs/
-    #       github_token: $GITHUB_TOKEN
+      deploy:
+        - provider: pages
+          skip_cleanup: true
+          local_dir: docs/
+          github_token: $GITHUB_TOKEN
 
     - stage: "Bundle package"
       before_script:
