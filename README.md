@@ -1,6 +1,8 @@
 tgraph
 ===
 
+<img src="ressources/tgraphlogo.png" width="150">
+
 A typescript library for drawing 3D graphs
 ---
 [![NPM version][npm-image]][npm-url]

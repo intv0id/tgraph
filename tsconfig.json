@@ -9,7 +9,11 @@
         "sourceMap": true,
         "target": "es2016",
         "moduleResolution": "node",
-        //"allowJs": true
+        //"allowJs": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./@types"
+        ],
     },
     "include": [
         "src/*.ts",
