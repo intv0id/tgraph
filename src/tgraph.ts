@@ -5,7 +5,6 @@ import * as $ from "jquery";
 import { NodeMesh, EdgeMesh, ArrowMesh, GraphEdge, GraphNode, Graph, GraphOptions } from "./graphTypes";
 import { Optimizer } from "./optimizer";
 import { makeMaterial, extend } from "./utils";
-import { Material } from 'three';
 
 export class GraphView {
     $s: JQuery<HTMLElement>;
@@ -113,10 +112,13 @@ export class GraphView {
 
     unselectNode() {
         if (this.selectedNode !== undefined) {
-            if (this.selectedNode.material instanceof Material) {
+            let material = this.selectedNode.material;
+            if (material instanceof THREE.MeshBasicMaterial ||
+                material instanceof THREE.MeshLambertMaterial ||
+                material instanceof THREE.MeshPhongMaterial) {
                 console.log(this.selectedNode.material)
-                this.selectedNode.material.color = new THREE.Color(parseInt(this.selectedNode.color, 16)) ;
-                this.selectedNode.material.needsUpdate = true;
+                material.color = new THREE.Color(parseInt(this.selectedNode.color, 16));
+                material.needsUpdate = true;
                 console.log(this.selectedNode.material)
             }
             this.options.onExitHover(this.selectedNode);
@@ -126,9 +128,12 @@ export class GraphView {
 
     selectNode(node: NodeMesh) {
         this.selectedNode = node;
-        if (this.selectedNode.material instanceof Material) {
-            this.selectedNode.material.color = new THREE.Color(parseInt(this.selectedNode.hoverColor, 16));
-            this.selectedNode.material.needsUpdate = true;
+        let material = this.selectedNode.material;
+        if (material instanceof THREE.MeshBasicMaterial ||
+            material instanceof THREE.MeshLambertMaterial ||
+            material instanceof THREE.MeshPhongMaterial) {
+            material.color = new THREE.Color(parseInt(this.selectedNode.hoverColor, 16));
+            material.needsUpdate = true;
         }
         this.options.onEnterHover(this.selectedNode);
     }

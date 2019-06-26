@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Material } from 'three';
 
 export function makeMaterial(color: string, shaderName: string = "basic"): THREE.ShaderMaterial {
     let colorInt = parseInt(color, 16);
