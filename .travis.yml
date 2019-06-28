@@ -15,6 +15,7 @@ jobs:
         - git clone https://github.com/TypeStrong/typedoc.git
         - cd typedoc
         - npm install
+        - cd ..
         #- npm install typedoc --global
         
       before_script:
@@ -24,7 +25,8 @@ jobs:
         - npm run build
         - mkdir docs
         - cp -r examples dist docs/
-        - typedoc --out docs tgraph
+        - ./typedoc/bin/typedoc --out docs tgraph
+        #- typedoc --out docs tgraph
 
       deploy:
         - provider: pages
