@@ -28,7 +28,7 @@ jobs:
         - ./typedoc/bin/typedoc --out docs src
         #- typedoc --out docs tgraph
         - cp -r examples dist ressources docs/
-        - cd docs/examples/ && create-index . -r --extensions html
+        - create-index ./docs/examples/ -r --extensions html && mv index.html ./docs/examples/
 
       deploy:
         - provider: pages
