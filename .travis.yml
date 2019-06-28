@@ -25,7 +25,7 @@ jobs:
         - npm run build
         - mkdir docs
         - cp -r examples dist docs/
-        - ./typedoc/bin/typedoc --out docs tgraph
+        - ./typedoc/bin/typedoc --out docs .
         #- typedoc --out docs tgraph
 
       deploy:
