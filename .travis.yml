@@ -26,7 +26,7 @@ jobs:
         - mkdir docs
         - ./typedoc/bin/typedoc --out docs src
         #- typedoc --out docs tgraph
-        - cp -r examples dist docs/
+        - cp -r examples dist ressources docs/
 
       deploy:
         - provider: pages
