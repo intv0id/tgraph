@@ -12,7 +12,6 @@ jobs:
   include:
     - stage: "Generate documentation"
       install:
-        - npm install create-index
         - git clone https://github.com/TypeStrong/typedoc.git
         - cd typedoc
         - npm install
@@ -28,7 +27,6 @@ jobs:
         - ./typedoc/bin/typedoc --out docs src
         #- typedoc --out docs tgraph
         - cp -r examples dist ressources docs/
-        - create-index ./docs/examples/ -r --extensions html && mv index.html ./docs/examples/
 
       deploy:
         - provider: pages
