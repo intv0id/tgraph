@@ -12,7 +12,10 @@ jobs:
   include:
     - stage: "Generate documentation"
       install:
-        - npm install typedoc --global
+        - git clone https://github.com/TypeStrong/typedoc.git
+        - cd typedoc
+        - npm install
+        #- npm install typedoc --global
         
       before_script:
         - npm install
@@ -21,7 +24,7 @@ jobs:
         - npm run build
         - mkdir docs
         - cp -r examples dist docs/
-    #     - typedoc --out docs tgraph
+        - typedoc --out docs tgraph
 
       deploy:
         - provider: pages
