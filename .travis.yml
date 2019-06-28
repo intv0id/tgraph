@@ -24,9 +24,9 @@ jobs:
       script:
         - npm run build
         - mkdir docs
-        - cp -r examples dist docs/
         - ./typedoc/bin/typedoc --out docs src
         #- typedoc --out docs tgraph
+        - cp -r examples dist docs/
 
       deploy:
         - provider: pages
