@@ -8,6 +8,7 @@ A typescript library for drawing 3D graphs
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
+[![CodeFactor][codefactor-image]][codefactor-url]
 
 This module aims at drawing an interactive and modular representation of information networks.
 
@@ -101,3 +102,5 @@ This module is based on the [jgraph](https://github.com/patrickfuller/jgraph) wo
 [npm-url]: https://www.npmjs.com/package/tgraph
 [travis-url]: https://travis-ci.org/intv0id/tgraph
 [travis-image]: https://travis-ci.org/intv0id/tgraph.svg?branch=master
+[codefactor-url]: https://www.codefactor.io/repository/github/intv0id/tgraph
+[codefactor-image]: https://www.codefactor.io/repository/github/intv0id/tgraph/badge
