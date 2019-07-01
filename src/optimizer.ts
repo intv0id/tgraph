@@ -107,7 +107,7 @@ export class Optimizer {
             n1.force.setY(THREE.Math.clamp(n1.force.y, -this.maxVelocity, this.maxVelocity));
             n1.force.setZ(THREE.Math.clamp(n1.force.z, -this.maxVelocity, this.maxVelocity));
 
-            n1.position.add(n1.force); 
+            n1.position.add(n1.force);
             n1.force.set(0, 0, 0);
         }
         for (let j = 0; j < this.edges.length; j += 1) {

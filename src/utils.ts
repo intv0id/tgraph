@@ -8,7 +8,7 @@ export function makeMaterial(color: string, shaderName: string = "basic"): THREE
         let materialName = 'Mesh' + shaderName.charAt(0).toUpperCase() + shaderName.slice(1) + 'Material';
         material = new THREE[materialName]({ color: colorInt });
     } else {
-        throw `Can't create shader of type ${shaderName}!`;
+        throw new Error(`Can't create shader of type ${shaderName}!`);
     }
     material.needsUpdate = true;
     return material

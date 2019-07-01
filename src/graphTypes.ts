@@ -46,7 +46,7 @@ class Deserializable implements IDeserializable {
 
 class DefaultDeserializable extends Deserializable {
     deserialize(json: any): void {
-        for (let prop in json) {
+        for (const prop in json) {
             if (!json.hasOwnProperty(prop) || !this.hasOwnProperty(prop)) {
                 continue;
             }
@@ -126,7 +126,7 @@ export class Graph extends Deserializable {
     }
 
     deserialize(json: any) {
-        for (let prop in json) {
+        for (const prop in json) {
             switch (prop) {
                 case "nodes":
                     this[prop] = json[prop].map((element: any) => {

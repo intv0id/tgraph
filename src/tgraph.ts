@@ -42,7 +42,7 @@ export class GraphView {
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
         this.controls.rotateSpeed = this.options.rotateSpeed;
 
-        // GEOMETRY   
+        // GEOMETRY
         this.sphereGeometry = new THREE.SphereGeometry(this.options.nodeSize, 16, 12);
         this.cylinderGeometry = new THREE.CylinderGeometry(this.options.edgeSize, this.options.edgeSize, 1, 32, 3, false);
         this.coneGeometry = new THREE.CylinderGeometry(this.options.edgeSize, this.options.arrowSize, 2 * this.options.arrowSize, 32, 3, false);
