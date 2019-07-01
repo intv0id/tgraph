@@ -17,7 +17,7 @@ jobs:
         - npm install
         - cd ..
         #- npm install typedoc --global
-        
+
       before_script:
         - npm install
 
@@ -27,7 +27,7 @@ jobs:
         - ./typedoc/bin/typedoc --out docs src
         #- typedoc --out docs tgraph
         - cp -r examples dist ressources docs/
-        - touch docs/.nojekyll 
+        - touch docs/.nojekyll
 
       deploy:
         - provider: pages
@@ -44,7 +44,7 @@ jobs:
 
       after_success:
         - npm pack
-      
+
       deploy:
         - provider: npm
           skip_cleanup: true
@@ -52,7 +52,7 @@ jobs:
           api_key: $NPM_TOKEN
           on:
             tags: true
-            
+
         - provider: releases
           api_key: $GITHUB_TOKEN
           file_glob: true
