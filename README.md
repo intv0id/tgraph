@@ -1,10 +1,9 @@
-tgraph
-===
+# tgraph
 
 <img src="ressources/tgraphLogo.png" width="150">
 
-A typescript library for drawing 3D graphs
----
+## A typescript library for drawing 3D graphs
+
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
@@ -14,15 +13,15 @@ This module aims at drawing an interactive and modular representation of informa
 
 For python jupyter notebooks use, please refer to [pytgraph](https://github.com/intv0id/pytgraph).
 
-**Example**
+## Example
 
 [![Example graph screenshot](examples/images/GithubFollowersGraph.png)](https://intv0id.github.io/tgraph/examples/github.html)
 
-# Usage
+## Usage
 
 Examples are provided [here](https://github.com/intv0id/tgraph/tree/master/examples).
 
-## Minimal code
+### Minimal code
 
 * Javascript
 
@@ -47,11 +46,11 @@ require(["jquery", "tgraph"], function (jquery, tgraph) {
 });
 ```
 
-### Options
+#### Options
 
 Check the `GraphOptions` class documentation for more details.
 
-## Graph format (JSON)
+### Graph format (JSON)
 
 ``` js
 {
@@ -65,7 +64,8 @@ Check the `GraphOptions` class documentation for more details.
   ]
 }
 ```
-### Node attributes
+
+#### Node attributes
 
 * name
 * label (optional)
@@ -82,18 +82,16 @@ Check the `GraphOptions` class documentation for more details.
 * color (optional, hexadecimal string)
 * size (optional)
 
-
-
-# Contribute
+## Contribute
 
 Feel free to get involved in this project and submit your pull requests. If you find any bug please feel free to [create a ticket](https://github.com/intv0id/tgraph/issues/new).
 
-## Roadmap
+### Roadmap
 
 * [ ] Documentation
 * [ ] Unit tests
 
-# Credits
+## Credits
 
 This module is based on the [jgraph](https://github.com/patrickfuller/jgraph) work and is under the MIT License.
 
