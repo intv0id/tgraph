@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import { ShaderTypes } from "./types";
 
 export class GraphOptions {
     runOptimization: boolean = true;
-    shader: string = "basic";
+    shaderType: ShaderTypes = ShaderTypes.BASIC;
     showSave: boolean = true;
     z: number = 100;
     rotateSpeed: number = 1;

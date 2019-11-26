@@ -1,28 +1,29 @@
-import * as THREE from 'three';
+import {Mesh, WebGLRenderer, PerspectiveCamera, HemisphereLight, DirectionalLight, SphereGeometry, CylinderGeometry, Scene, Matrix4, Euler, MeshBasicMaterial, MeshLambertMaterial, MeshPhongMaterial, Color, Vector2, Raycaster} from 'three';
 import * as TrackballControls from "three-trackballcontrols";
 import * as $ from "jquery";
 
-import { NodeMesh, EdgeMesh, ArrowMesh, GraphEdge, GraphNode, Graph, GraphOptions } from "./graphTypes";
+import { GraphOptions } from "./graphTypes";
 import { Optimizer } from "./optimizer";
 import { makeMaterial, extend } from "./utils";
+import { nodesMeshCollection, verticesMeshCollection, arrowsMeshCollection, NodeMesh, Node, Vertex, GraphData, GraphMeshes } from './types';
 
 export class GraphView {
     $s: JQuery<HTMLElement>;
     options: GraphOptions;
-    renderer: THREE.WebGLRenderer;
-    camera: THREE.PerspectiveCamera;
+    renderer: WebGLRenderer;
+    camera: PerspectiveCamera;
     controls: TrackballControls;
-    light: THREE.HemisphereLight;
-    directionalLight: THREE.DirectionalLight;
+    light: HemisphereLight;
+    directionalLight: DirectionalLight;
 
-    sphereGeometry: THREE.SphereGeometry;
-    cylinderGeometry: THREE.CylinderGeometry;
-    coneGeometry: THREE.CylinderGeometry;
-    scene: THREE.Scene;
+    sphereGeometry: SphereGeometry;
+    cylinderGeometry: CylinderGeometry;
+    coneGeometry: CylinderGeometry;
+    scene: Scene;
 
-    nodes: NodeMesh[] = [];
-    edges: EdgeMesh[] = [];
-    arrows: ArrowMesh[] = [];
+    nodes: nodesMeshCollection = {};
+    edges: verticesMeshCollection = [];
+    arrows: arrowsMeshCollection = [];
     directed: boolean = true;
 
     nodeNameToPosition: Map<string, number> = new Map<string, number>();
@@ -33,30 +34,30 @@ export class GraphView {
     constructor(selector: JQuery.Selector, options: GraphOptions) {
         this.$s = $(selector);
         this.options = options;
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
         this.renderer.setSize(this.$s.width() || 0, this.$s.height() || 1);
         this.$s.append(this.renderer.domElement);
 
-        this.camera = new THREE.PerspectiveCamera(70, (this.$s.width() || 0) / (this.$s.height() || 1));
+        this.camera = new PerspectiveCamera(70, (this.$s.width() || 0) / (this.$s.height() || 1));
         this.camera.position.setZ(this.options.z);
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
         this.controls.rotateSpeed = this.options.rotateSpeed;
 
         // GEOMETRY
-        this.sphereGeometry = new THREE.SphereGeometry(this.options.nodeSize, 16, 12);
-        this.cylinderGeometry = new THREE.CylinderGeometry(this.options.edgeSize, this.options.edgeSize, 1, 32, 3, false);
-        this.coneGeometry = new THREE.CylinderGeometry(this.options.edgeSize, this.options.arrowSize, 2 * this.options.arrowSize, 32, 3, false);
+        this.sphereGeometry = new SphereGeometry(this.options.nodeSize, 16, 12);
+        this.cylinderGeometry = new CylinderGeometry(this.options.edgeSize, this.options.edgeSize, 1, 32, 3, false);
+        this.coneGeometry = new CylinderGeometry(this.options.edgeSize, this.options.arrowSize, 2 * this.options.arrowSize, 32, 3, false);
 
-        // This orients the cylinder primitive so THREE.lookAt() works properly
-        let matrix = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(Math.PI / 2, Math.PI, 0));
+        // This orients the cylinder primitive so lookAt() works properly
+        let matrix = new Matrix4().makeRotationFromEuler(new Euler(Math.PI / 2, Math.PI, 0));
         this.cylinderGeometry.applyMatrix(matrix);
         this.coneGeometry.applyMatrix(matrix);
 
-        this.light = new THREE.HemisphereLight(0xffffff, 0.5);
-        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        this.light = new HemisphereLight(0xffffff, 0.5);
+        this.directionalLight = new DirectionalLight(0xffffff, 0.5);
         this.directionalLight.position.set(1, 1, 1);
 
-        this.scene = new THREE.Scene();
+        this.scene = new Scene();
         this.scene.add(this.camera);
         this.camera.add(this.light);
         this.camera.add(this.directionalLight);
@@ -113,11 +114,11 @@ export class GraphView {
     unselectNode() {
         if (this.selectedNode !== undefined) {
             let material = this.selectedNode.material;
-            if (material instanceof THREE.MeshBasicMaterial ||
-                material instanceof THREE.MeshLambertMaterial ||
-                material instanceof THREE.MeshPhongMaterial) {
+            if (material instanceof MeshBasicMaterial ||
+                material instanceof MeshLambertMaterial ||
+                material instanceof MeshPhongMaterial) {
                 console.log(this.selectedNode.material)
-                material.color = new THREE.Color(parseInt(this.selectedNode.color, 16));
+                material.color = new Color(parseInt(this.selectedNode.color, 16));
                 material.needsUpdate = true;
                 console.log(this.selectedNode.material)
             }
@@ -129,10 +130,10 @@ export class GraphView {
     selectNode(node: NodeMesh) {
         this.selectedNode = node;
         let material = this.selectedNode.material;
-        if (material instanceof THREE.MeshBasicMaterial ||
-            material instanceof THREE.MeshLambertMaterial ||
-            material instanceof THREE.MeshPhongMaterial) {
-            material.color = new THREE.Color(parseInt(this.selectedNode.hoverColor, 16));
+        if (material instanceof MeshBasicMaterial ||
+            material instanceof MeshLambertMaterial ||
+            material instanceof MeshPhongMaterial) {
+            material.color = new Color(parseInt(this.selectedNode.hoverColor, 16));
             material.needsUpdate = true;
         }
         this.options.onEnterHover(this.selectedNode);
@@ -140,33 +141,32 @@ export class GraphView {
 
 
     cursorIntersects(event: any) {
-        let mouse = new THREE.Vector2();
+        let mouse = new Vector2();
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
-        let raycaster = new THREE.Raycaster();
+        let raycaster = new Raycaster();
         raycaster.setFromCamera(mouse, this.camera);
 
-        let intersects = raycaster.intersectObjects(this.nodes);
+        let intersects = raycaster.intersectObjects(Object.values(this.nodes));
         return intersects
     }
 
-    drawNode(node: GraphNode) {
-        let material = makeMaterial(node.color, this.options.shader);
-        let mesh = new THREE.Mesh(this.sphereGeometry, material);
+    drawNode(node: Node, id: string) {
+        let material = makeMaterial(node.color, this.options.shaderType);
+        let mesh = new Mesh(this.sphereGeometry, material);
         mesh.name = node.name;
         mesh.position.set(node.location.x, node.location.y, node.location.z);
         mesh.scale.set(node.size, node.size, node.size);
         this.scene.add(mesh);
-        this.nodeNameToPosition.set(node.name, this.nodes.length);
-        this.nodes.push(extend(node, mesh));
+        this.nodes[id] = extend(node, mesh);
     }
 
-    drawEdge(edge: GraphEdge) {
+    drawEdge(edge: Vertex) {
         let srcNode = this.nodes[this.nodeNameToPosition.get(edge.src)];
         let dstNode = this.nodes[this.nodeNameToPosition.get(edge.dst)];
-        let material = makeMaterial(edge.color, this.options.shader);
-        let mesh = new THREE.Mesh(this.cylinderGeometry, material);
+        let material = makeMaterial(edge.color, this.options.shaderType);
+        let mesh = new Mesh(this.cylinderGeometry, material);
         mesh.position.addVectors(srcNode.position, dstNode.position).divideScalar(2.0);
         mesh.lookAt(dstNode.position);
         mesh.scale.set(edge.size, edge.size, dstNode.position.distanceTo(srcNode.position));
@@ -176,22 +176,24 @@ export class GraphView {
         this.edges.push(extend(edge, mesh));
 
         if (this.directed) {
-            let arrow = new THREE.Mesh(this.coneGeometry, material);
+            let arrow = new Mesh(this.coneGeometry, material);
             arrow.position.copy(mesh.position);
             arrow.lookAt(dstNode.position);
             let size = Math.sqrt(edge.size);
             arrow.scale.set(size, size, size);
             this.scene.add(arrow);
-            this.arrows.push(arrow);
+            this.arrows.push(extend(edge, arrow));
         }
     }
 
 
-    draw(graph: Graph) {
-        this.directed = graph.directed;
+    draw(graph: GraphData) {
+        this.directed = graph.isDirected;
 
-        graph.nodes.forEach(node => this.drawNode(node));
-        graph.edges.forEach(edge => this.drawEdge(edge));
+        for (let id in graph.nodes) {
+            this.drawNode(graph.nodes[id], id);
+        }
+        graph.vertices.forEach(edge => this.drawEdge(edge));
 
         if (this.options.runOptimization) {
             this.optimize();
@@ -205,7 +207,8 @@ export class GraphView {
     }
 
     optimize() {
-        let optimizer = new Optimizer(this.nodes, this.edges, this.arrows, this.directed, this.nodeNameToPosition);
+        let gm = {nodes: this.nodes, vertices: this.edges,  arrows: this.arrows};
+        let optimizer = new Optimizer(gm);
         optimizer.run();
     }
 
