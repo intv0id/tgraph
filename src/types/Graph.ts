@@ -3,10 +3,9 @@ import { nodesCollection, verticesCollection } from './GraphComponents';
 import { GraphParameters } from './GraphParameters';
 
 export class Graph<NodeDataType, VerticeDataType> {
-    constructor(nodes: nodesCollection<NodeDataType>, vertices: verticesCollection<VerticeDataType>, param: GraphParameters) {
+    constructor(nodes: nodesCollection<NodeDataType>, vertices: verticesCollection<VerticeDataType>) {
         this.nodes = nodes;
         this.vertices = vertices;
-        this.param = param;
     }
     optimize(iterations: number = 10000, forceStrength: number = 10, dampening: number = 0.01, maxVelocity: number = 2.0, maxDistance: number = 50, delta: Vector3 = new Vector3()) {
         let frameIteration = () => {
@@ -93,5 +92,4 @@ export class Graph<NodeDataType, VerticeDataType> {
     }
     nodes: nodesCollection<NodeDataType>;
     vertices: verticesCollection<VerticeDataType>;
-    param: GraphParameters;
 }
