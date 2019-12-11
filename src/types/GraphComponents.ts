@@ -10,7 +10,6 @@ export class Node<DataType> extends Mesh {
         this.label = label;
         this.data = data;
         this.size = opt.size;
-        this.location = randomVector3();
         this.force = randomVector3();
     }
     name: string;
@@ -18,15 +17,12 @@ export class Node<DataType> extends Mesh {
     hoverColor: string;
     label: string;
     size: number;
-    location: Vector3;
     force: Vector3;
     data: DataType;
 }
 export class Vertex<DataType> extends Mesh {
     constructor(src: string, dst: string, label: string, data: DataType, directed: Boolean, opt: MeshParameters<Vertex<DataType>>) {
         super(CONSTS.geometry.cylinder, opt.material);
-
-        //this.position.set(node.location.x, node.location.y, node.location.z); TODO Draw
         this.scale.set(opt.size, opt.size, opt.size);
         this.src = src;
         this.dst = dst;

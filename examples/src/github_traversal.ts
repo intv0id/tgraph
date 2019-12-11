@@ -1,5 +1,7 @@
-import { GraphData, nodesCollection, Node, verticesCollection } from "../../src/types";
 import { Vector3 } from "three";
+import {nodesCollection, verticesCollection, Node, Vertex} from "../../src/types/GraphComponents"
+import { Graph } from "../../src/types/Graph";
+import { MeshParameters } from "../../src/types/MeshParameters";
 
 export type userGraphOptions = {
     ghUserName:string,
@@ -8,13 +10,13 @@ export type userGraphOptions = {
     reposPerAccountLimit:number,
 }
 
-interface IRequest<T> {
+export interface IRequest<T> {
     UserName: string
 } ;
 
-interface IGithubData {};
+export interface IGithubData {};
 
-interface IUserData extends IGithubData {
+export interface IUserData extends IGithubData {
     id: number,
     name: string,
     html_url: string,
@@ -42,28 +44,19 @@ export async function getGhData<IUserData> (request: IRequest<IUserData>): Promi
   };
 
 export class githubConnections {
-    public static async getUserGraph(options:userGraphOptions): Promise<GraphData<IGithubData,null>> {
+    static nodeParams: MeshParameters<IUserData> = new MeshParameters<IUserData>();
+
+    public static async getUserGraph(options:userGraphOptions): Promise<Graph<IGithubData,null>> {
         let accountsList: string[] = [options.ghUserName];
         let nodes: nodesCollection<IGithubData> = {};
         let vertices: verticesCollection<null> = [];
         while (accountsList.length > 0){
             let ud = await getGhData(<IRequest<IUserData>> {UserName: accountsList.pop()})
-            nodes[ud.id] = <Node<IGithubData>> {
-                name: ud.name,
-                color: "000000", // TODO
-                hoverColor: "000000", // TODO
-                label: ud.id.toString(),
-                size: 3, // TODO
-                location: new Vector3(), // TODO
-                url: ud.html_url,
-                force: new Vector3(), // TODO
-                data: ud
-            }
+            nodes[ud.id] = new Node<IUserData>(ud.name, ud.id.toString(), ud, this.nodeParams);
         }
-        return <GraphData<IGithubData,null>>{
+        return <Graph<IGithubData,null>>{
             nodes: nodes,
             vertices: vertices,
-            isDirected: true,
         }
         
     }
