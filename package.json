@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@types/jquery": "^3.3.29",
+    "@types/react": "^16.9.16",
+    "guid-typescript": "^1.0.9",
     "jquery": "^3.4.1",
     "lodash": "^4.17.11",
     "math": "^0.0.3",

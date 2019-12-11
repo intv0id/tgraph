@@ -1,9 +1,10 @@
 import * as THREE from 'three';
-import { NodeMesh, EdgeMesh, ArrowMesh } from "./graphTypes";
+import { GraphMeshes, arrowsMeshCollection, nodesMeshCollection, verticesMeshCollection, GraphData } from "./types";
 export declare class Optimizer {
-    nodes: NodeMesh[];
-    edges: EdgeMesh[];
-    arrows: ArrowMesh[];
+    graphData: GraphData;
+    nodes: nodesMeshCollection;
+    edges: verticesMeshCollection;
+    arrows: arrowsMeshCollection;
     directed: boolean;
     nodeNameToPosition: Map<string, number>;
     iterations: number;
@@ -12,7 +13,7 @@ export declare class Optimizer {
     maxVelocity: number;
     maxDistance: number;
     delta: THREE.Vector3;
-    constructor(nodes: NodeMesh[], edges: EdgeMesh[], arrows: ArrowMesh[], directed: boolean, nodeNameToPosition: Map<string, number>, iterations?: number, forceStrength?: number);
+    constructor(gm: GraphMeshes, iterations?: number, forceStrength?: number);
     reset(): void;
     run(): void;
     iterate(): void;

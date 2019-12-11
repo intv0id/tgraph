@@ -2,14 +2,15 @@ import {Mesh, WebGLRenderer, PerspectiveCamera, HemisphereLight, DirectionalLigh
 import * as TrackballControls from "three-trackballcontrols";
 import * as $ from "jquery";
 
-import { GraphOptions } from "./graphTypes";
+import { GraphOptions } from "./GraphOptions";
 import { Optimizer } from "./optimizer";
-import { makeMaterial, extend } from "./utils";
-import { nodesMeshCollection, verticesMeshCollection, arrowsMeshCollection, NodeMesh, Node, Vertex, GraphData, GraphMeshes } from './types';
+import { makeMaterial, extend } from "../utils";
+import { nodesMeshCollection, verticesMeshCollection, arrowsMeshCollection, NodeMesh, GraphData, GraphMeshes } from './types';
+import { Node, Vertex } from "../types/GraphComponents";
 
-export class GraphView {
+export class GraphView<T, U> {
     $s: JQuery<HTMLElement>;
-    options: GraphOptions;
+    options: GraphOptions<T>;
     renderer: WebGLRenderer;
     camera: PerspectiveCamera;
     controls: TrackballControls;
@@ -21,18 +22,18 @@ export class GraphView {
     coneGeometry: CylinderGeometry;
     scene: Scene;
 
-    nodes: nodesMeshCollection = {};
-    edges: verticesMeshCollection = [];
-    arrows: arrowsMeshCollection = [];
+    nodes: nodesMeshCollection<T> = {};
+    edges: verticesMeshCollection<U> = [];
+    arrows: arrowsMeshCollection<U> = [];
     directed: boolean = true;
 
     nodeNameToPosition: Map<string, number> = new Map<string, number>();
-    selectedNode: NodeMesh | undefined = undefined;
+    selectedNode: NodeMesh<T> | undefined = undefined;
 
 
 
-    constructor(selector: JQuery.Selector, options: GraphOptions) {
-        this.$s = $(selector);
+    constructor(s: HTMLElement, options: GraphOptions<T>) {
+        this.$s = $(s);
         this.options = options;
         this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
         this.renderer.setSize(this.$s.width() || 0, this.$s.height() || 1);
@@ -102,11 +103,11 @@ export class GraphView {
         } else {
             // Move from empty to node
             if (this.selectedNode === undefined) {
-                this.selectNode(<NodeMesh>intersects[0].object)
+                this.selectNode(<NodeMesh<T>>intersects[0].object)
                 // Move between nodes
             } else if (this.selectedNode !== intersects[0].object) {
                 this.unselectNode();
-                this.selectNode(<NodeMesh>intersects[0].object);
+                this.selectNode(<NodeMesh<T>>intersects[0].object);
             }
         }
     }
@@ -127,7 +128,7 @@ export class GraphView {
         this.selectedNode = undefined;
     }
 
-    selectNode(node: NodeMesh) {
+    selectNode(node: NodeMesh<T>) {
         this.selectedNode = node;
         let material = this.selectedNode.material;
         if (material instanceof MeshBasicMaterial ||
@@ -152,7 +153,7 @@ export class GraphView {
         return intersects
     }
 
-    drawNode(node: Node, id: string) {
+    drawNode(node: Node<T>, id: string) {
         let material = makeMaterial(node.color, this.options.shaderType);
         let mesh = new Mesh(this.sphereGeometry, material);
         mesh.name = node.name;
@@ -162,7 +163,7 @@ export class GraphView {
         this.nodes[id] = extend(node, mesh);
     }
 
-    drawEdge(edge: Vertex) {
+    drawEdge(edge: Vertex<U>) {
         let srcNode = this.nodes[this.nodeNameToPosition.get(edge.src)];
         let dstNode = this.nodes[this.nodeNameToPosition.get(edge.dst)];
         let material = makeMaterial(edge.color, this.options.shaderType);
@@ -187,7 +188,7 @@ export class GraphView {
     }
 
 
-    draw(graph: GraphData) {
+    draw(graph: GraphData<T, U>) {
         this.directed = graph.isDirected;
 
         for (let id in graph.nodes) {

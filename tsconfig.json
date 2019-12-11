@@ -17,6 +17,7 @@
     },
     "include": [
         "src/*.ts",
+        "src/*.tsx", "src/types/GraphComponents.ts", "src/components/MeshParameters.ts", "src/types/ShaderTypes.ts", "src/types/Graph.ts", "src/old/tgraph.ts"
     ],
     "exclude": [
         "node_modules",

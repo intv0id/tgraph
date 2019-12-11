@@ -1,0 +1,22 @@
+import { Material } from 'three';
+import { makeMaterial } from '../utils';
+import { ShaderTypes } from './Shaders';
+/**
+ * Graph types
+ */
+export class MeshParameters<MeshType> {
+    constructor(size: number = 1, color: string = "ffffff", hoverColor: string = "ff0000", shaderType: ShaderTypes.BASIC, onEnterHover: Function = function (mesh: MeshType) { }, onExitHover: Function = function (mesh: MeshType) { }, onClickAction: Function = function (mesh: MeshType) { }) {
+        this.size = size;
+        this.material = makeMaterial(color, shaderType);
+        this.hoverMaterial = makeMaterial(hoverColor, shaderType);
+        this.onExitHover = onExitHover;
+        this.onEnterHover = onEnterHover;
+        this.onClickAction = onClickAction;
+    }
+    material: Material;
+    hoverMaterial: Material;
+    size: number;
+    onEnterHover: Function;
+    onExitHover: Function = function (mesh: MeshType) { };
+    onClickAction: Function = function (mesh: MeshType) { };
+}
