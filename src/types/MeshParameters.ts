@@ -25,4 +25,4 @@ export class MeshParameters<MeshType> {
     onEnterHover: Function;
     onExitHover: Function;
     onClickAction: Function;
-}
+};

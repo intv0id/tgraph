@@ -1,8 +1,6 @@
-import { Vector3 } from "three";
 import {nodesCollection, verticesCollection, Node, Vertex} from "../../src/types/GraphComponents"
 import { Graph } from "../../src/types/Graph";
 import { MeshParameters } from "../../src/types/MeshParameters";
-import { GraphParameters } from "../../src/types/GraphParameters";
 
 export type userGraphOptions = {
     ghUserName:string,

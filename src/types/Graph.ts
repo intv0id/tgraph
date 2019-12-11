@@ -1,6 +1,5 @@
 import { Vector3, Math as ThreeMath } from 'three';
 import { nodesCollection, verticesCollection } from './GraphComponents';
-import { GraphParameters } from './GraphParameters';
 
 export class Graph<NodeDataType, VerticeDataType> {
     constructor(nodes: nodesCollection<NodeDataType>, vertices: verticesCollection<VerticeDataType>) {

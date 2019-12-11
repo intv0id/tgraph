@@ -1,6 +1,6 @@
+import * as React from 'react';
 import { Component, useEffect } from 'react';
 import { Guid } from "guid-typescript";
-import { GraphView } from "../old/tgraph";
 import { Graph } from '../types/Graph';
 import { GraphParameters } from '../types/GraphParameters';
 import { Node, Vertex } from '../types/GraphComponents';
@@ -10,7 +10,7 @@ import * as TrackballControls from "three-trackballcontrols";
 
 
 
-export interface GraphProps<NodeDataType, VerticeDataType> { graphData: Graph<NodeDataType, VerticeDataType>, graphParams: GraphParameters }
+export interface GraphProps<NodeDataType, VertexDataType> { graphData: Graph<NodeDataType, VertexDataType>, graphParams: GraphParameters };
 export interface GraphState { scene: Scene, componentId: string, selectedNodeId?: string, selectedVerticeId?: string };
 
 export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, GraphState> {
@@ -76,7 +76,7 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
         let camera = new PerspectiveCamera(70, this.props.graphParams.width / this.props.graphParams.height);
         camera.position.setZ(this.props.graphParams.cameraZ);
 
-        let controls = new TrackballControls(camera, renderer.domElement); // TODO renderer
+        let controls = new TrackballControls(camera, renderer.domElement);
         controls.rotateSpeed = this.props.graphParams.rotateSpeed;
 
         camera.add(light);

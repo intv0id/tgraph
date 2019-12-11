@@ -1,13 +1,13 @@
 const path = require('path');
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, 'src/index.tsx'),
+  entry: path.join(__dirname, 'src/github.tsx'),
   output: {
-    library: 'tgraph',
+    library: 'githubGraph',
     libraryTarget: "umd",
     path: __dirname + '/dist',
     publicPath: '/dist/',
-    filename: "tgraph.bundle.jsx",
+    filename: "GithubGraph.bundle.js",
   },
   module: {
     rules: [{

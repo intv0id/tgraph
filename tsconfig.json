@@ -9,15 +9,18 @@
         "sourceMap": true,
         "target": "es2016",
         "moduleResolution": "node",
-        //"allowJs": true,
+        "allowJs": false,
         "typeRoots": [
             "./node_modules/@types",
             "./@types"
         ],
+        "jsx": "react",
     },
     "include": [
         "src/*.ts",
-        "src/*.tsx", "src/types/GraphComponents.ts", "src/components/MeshParameters.ts", "src/types/ShaderTypes.ts", "src/types/Graph.ts"
+        "src/*.tsx", 
+        "src/types/*.ts", 
+        "src/components/*.tsx",
     ],
     "exclude": [
         "node_modules",

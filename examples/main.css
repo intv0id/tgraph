@@ -28,7 +28,7 @@ a {
           transition: 0.15s color ease;
 }
 
-.graph {
+.app {
   height: 100%;
   position: absolute;
   width: 100%;

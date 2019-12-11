@@ -14,4 +14,4 @@ let graphData = githubConnections.getUserGraph({
 let graphParams = new GraphParameters();
 
 ReactDOM.render(
-    <GraphCanvas<IGithubData, null> graphData={graphData} graphParams={graphParams} />, document.getElementById('Container'));
+    <GraphCanvas<IGithubData, null> graphData={graphData} graphParams={graphParams} />, document.getElementById('app'));

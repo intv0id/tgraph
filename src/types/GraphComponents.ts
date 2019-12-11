@@ -42,7 +42,7 @@ export class Vertex<DataType> extends Mesh {
     data: DataType;
     opt: MeshParameters<Vertex<DataType>>;
     arrow: Mesh | undefined;
-}
+};
 export type nodesCollection<T> = {
     [id: string]: Node<T>;
 };

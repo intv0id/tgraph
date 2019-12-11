@@ -2,17 +2,9 @@ import * as THREE from 'three';
 import { ShaderMaterial, Vector3 } from 'three';
 import { ShaderTypes } from "./types/Shaders";
 
-/**
- * Math methods
- */
-
 export function randomVector3(){
     return new Vector3(Math.random(), Math.random(), Math.random());
 }
-
-/**
- * Material methods
- */
 
 export function makeMaterial(color: string, shaderType: ShaderTypes = ShaderTypes.BASIC): ShaderMaterial {
     let colorInt = parseInt(color, 16);

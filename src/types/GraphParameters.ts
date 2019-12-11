@@ -17,4 +17,4 @@ export class GraphParameters {
     hoverableNodes: boolean = true;
     clickableVertices: boolean = false;
     hoverableVertices: boolean = false;
-}
+};
