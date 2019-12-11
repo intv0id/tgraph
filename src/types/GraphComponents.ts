@@ -36,7 +36,7 @@ export class Vertex<DataType> extends Mesh {
         if (directed){
             this.arrow = new Mesh(CONSTS.geometry.cylinder, opt.material);
 
-            let size = Math.sqrt(edge.size);
+            let size = Math.sqrt(opt.size);
             this.arrow.scale.set(size, size, size);
         }
     }

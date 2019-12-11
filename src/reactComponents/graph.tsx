@@ -1,6 +1,6 @@
-import {Component, useEffect} from 'react';
+import { Component, useEffect } from 'react';
 import { Guid } from "guid-typescript";
-import { GraphView} from "../old/tgraph";
+import { GraphView } from "../old/tgraph";
 import { Graph } from '../types/Graph';
 import { GraphParameters } from '../types/GraphParameters';
 import { Node, Vertex } from '../types/GraphComponents';
@@ -10,8 +10,8 @@ import * as TrackballControls from "three-trackballcontrols";
 
 
 
-export interface GraphProps<NodeDataType, VerticeDataType> { graphData: Graph<NodeDataType, VerticeDataType>, graphParams: GraphParameters}
-export interface GraphState { scene: Scene, componentId:string, selectedNodeId?: string, selectedVerticeId?: string };
+export interface GraphProps<NodeDataType, VerticeDataType> { graphData: Graph<NodeDataType, VerticeDataType>, graphParams: GraphParameters }
+export interface GraphState { scene: Scene, componentId: string, selectedNodeId?: string, selectedVerticeId?: string };
 
 export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, GraphState> {
 
@@ -25,7 +25,7 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
         edge.position.addVectors(srcNode.position, dstNode.position).divideScalar(2.0);
         edge.scale.set(edge.opt.size, edge.opt.size, dstNode.position.distanceTo(srcNode.position));
         edge.lookAt(dstNode.position);
-        
+
         this.state.scene.add(edge);
 
         if (edge.arrow) {
@@ -62,7 +62,7 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
     }
 
     onMouseMove() {
-        
+
     }
 
     render() {
@@ -85,20 +85,25 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
         let scene = new Scene();
         scene.add(camera);
 
-        this.setState({...this.state, scene: scene})
+        this.setState({ ...this.state, scene: scene })
 
 
         this.animate(renderer, scene, camera, controls);
-        
+
 
         let componentId = `Graph${Guid.create().toString()}`;
-        this.setState({...this.state, componentId: componentId});
+        this.setState({ ...this.state, componentId: componentId });
 
         //TODO Resize & show save button
-        
+
         useEffect((() => this.draw(renderer)).bind(this))
 
-        return <div className="graphCanvas" id={componentId} onClick={this.onClick.bind(this)} onMouseMove={this.onMouseMove.bind(this)}></div>;
+        const style = {
+            width: `${this.props.graphParams.width}px`,
+            height: `${this.props.graphParams.height}px`
+        };
+
+        return <div className="graphCanvas" id={componentId} onClick={this.onClick.bind(this)} onMouseMove={this.onMouseMove.bind(this)} style={style}></div>;
     }
 }
 
