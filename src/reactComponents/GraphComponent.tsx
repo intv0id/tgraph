@@ -7,9 +7,6 @@ import { Node, Vertex } from '../types/GraphComponents';
 import { Scene, HemisphereLight, DirectionalLight, Camera, PerspectiveCamera, WebGLRenderer } from 'three';
 import * as TrackballControls from "three-trackballcontrols";
 
-
-
-
 export interface GraphProps<NodeDataType, VertexDataType> { graphData: Graph<NodeDataType, VertexDataType>, graphParams: GraphParameters };
 export interface GraphState { scene: Scene, componentId: string, selectedNodeId?: string, selectedVerticeId?: string };
 

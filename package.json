@@ -1,6 +1,6 @@
 {
   "name": "tgraph",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A typescript package for plotting 3D graphs.",
   "main": "webpack.config.js",
   "types": "./lib/index.d.ts",
@@ -19,7 +19,6 @@
     "react-dom": "^16.12.0",
     "three": "^0.105.2",
     "three-trackballcontrols": "0.0.7",
-    "three-trackballcontrols-ts": "^0.1.2",
     "typescript": "^3.5.1"
   },
   "devDependencies": {

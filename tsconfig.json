@@ -21,6 +21,8 @@
         "src/*.tsx", 
         "src/types/*.ts", 
         "src/components/*.tsx",
+        "examples/src/*.ts",
+        "examples/src/*.tsx",
     ],
     "exclude": [
         "node_modules",

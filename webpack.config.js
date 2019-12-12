@@ -1,19 +1,23 @@
 const path = require('path');
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, 'src/index.tsx'),
+  entry: {
+    tgraph: path.join(__dirname, 'src', 'index.tsx'),
+    GithubGraph: path.join(__dirname, "examples", "src", "github.tsx")
+  },
   output: {
     library: 'tgraph',
     libraryTarget: "umd",
     path: __dirname + '/dist',
     publicPath: '/dist/',
-    filename: "tgraph.bundle.jsx",
+    filename: '[name].js',
   },
   module: {
     rules: [{
       test: /\.ts(x?)$/,
       include: [
-        path.join(__dirname, 'src')
+        path.join(__dirname, 'src'),
+        path.join(__dirname, 'examples', 'src'),
       ],
       exclude: /node_modules/,
       loader: 'ts-loader',

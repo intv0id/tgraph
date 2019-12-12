@@ -4,7 +4,7 @@ import { randomVector3 } from '../utils';
 import { MeshParameters } from './MeshParameters';
 export class Node<DataType> extends Mesh {
     constructor(name: string, label: string, data: DataType, opt: MeshParameters<Node<DataType>>) {
-        super(CONSTS.geometry.sphere, opt.material);
+        super(CONSTS.geometry.sphere(opt.size), opt.material);
         this.scale.set(opt.size, opt.size, opt.size);
         this.name = name;
         this.label = label;
@@ -22,7 +22,7 @@ export class Node<DataType> extends Mesh {
 }
 export class Vertex<DataType> extends Mesh {
     constructor(src: string, dst: string, label: string, data: DataType, directed: Boolean, opt: MeshParameters<Vertex<DataType>>) {
-        super(CONSTS.geometry.cylinder, opt.material);
+        super(CONSTS.geometry.cylinder(opt.size), opt.material);
         this.scale.set(opt.size, opt.size, opt.size);
         this.src = src;
         this.dst = dst;
@@ -30,7 +30,7 @@ export class Vertex<DataType> extends Mesh {
         this.data = data;
         this.opt = opt;
         if (directed){
-            this.arrow = new Mesh(CONSTS.geometry.cylinder, opt.material);
+            this.arrow = new Mesh(CONSTS.geometry.cone(opt.size, opt.size), opt.material);
 
             let size = Math.sqrt(opt.size);
             this.arrow.scale.set(size, size, size);
