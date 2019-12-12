@@ -8,12 +8,14 @@ import { Scene, HemisphereLight, DirectionalLight, Camera, PerspectiveCamera, We
 import * as TrackballControls from "three-trackballcontrols";
 
 export interface GraphProps<NodeDataType, VertexDataType> { graphData: Graph<NodeDataType, VertexDataType>, graphParams: GraphParameters };
-export interface GraphState { scene: Scene, componentId: string, selectedNodeId?: string, selectedVerticeId?: string };
+export interface GraphState { selectedNodeId?: string, selectedVerticeId?: string };
 
 export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, GraphState> {
 
+    readonly state: GraphState = { selectedNodeId: undefined, selectedVerticeId: undefined };
+
     drawNode(node: Node<T>, id: string) {
-        this.state.scene.add(node);
+        this.scene.add(node);
     }
 
     drawEdge(edge: Vertex<U>) {
@@ -23,12 +25,12 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
         edge.scale.set(edge.opt.size, edge.opt.size, dstNode.position.distanceTo(srcNode.position));
         edge.lookAt(dstNode.position);
 
-        this.state.scene.add(edge);
+        this.scene.add(edge);
 
         if (edge.arrow) {
             edge.arrow.position.copy(edge.position);
             edge.arrow.lookAt(dstNode.position);
-            this.state.scene.add(edge.arrow);
+            this.scene.add(edge.arrow);
         }
     }
 
@@ -45,7 +47,7 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
             this.props.graphData.optimize();
         }
 
-        document.getElementById(this.state.componentId).append(renderer.domElement);
+        document.getElementById(this.componentId).append(renderer.domElement);
     }
 
     animate(renderer: WebGLRenderer, scene: Scene, camera: Camera, controls: TrackballControls) {
@@ -62,9 +64,13 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
 
     }
 
+    componentDidMount(){
+        this.draw(this.renderer);
+    }
+
     render() {
-        let renderer = new WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(this.props.graphParams.width, this.props.graphParams.height);
+        this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
+        this.renderer.setSize(this.props.graphParams.width, this.props.graphParams.height);
 
         let light = new HemisphereLight(0xffffff, 0.5);
         let directionalLight = new DirectionalLight(0xffffff, 0.5);
@@ -73,35 +79,34 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
         let camera = new PerspectiveCamera(70, this.props.graphParams.width / this.props.graphParams.height);
         camera.position.setZ(this.props.graphParams.cameraZ);
 
-        let controls = new TrackballControls(camera, renderer.domElement);
+        let controls = new TrackballControls(camera, this.renderer.domElement);
         controls.rotateSpeed = this.props.graphParams.rotateSpeed;
 
         camera.add(light);
         camera.add(directionalLight);
 
-        let scene = new Scene();
-        scene.add(camera);
+        this.scene = new Scene();
+        this.scene.add(camera);
 
-        this.setState({ ...this.state, scene: scene })
-
-
-        this.animate(renderer, scene, camera, controls);
+        this.animate(this.renderer, this.scene, camera, controls);
 
 
-        let componentId = `Graph${Guid.create().toString()}`;
-        this.setState({ ...this.state, componentId: componentId });
+        this.componentId = `Graph${Guid.create().toString()}`;
 
         //TODO Resize & show save button
-
-        useEffect((() => this.draw(renderer)).bind(this))
 
         const style = {
             width: `${this.props.graphParams.width}px`,
             height: `${this.props.graphParams.height}px`
         };
 
-        return <div className="graphCanvas" id={componentId} onClick={this.onClick.bind(this)} onMouseMove={this.onMouseMove.bind(this)} style={style}></div>;
+        return <div className="graphCanvas" id={this.componentId} onClick={this.onClick.bind(this)} onMouseMove={this.onMouseMove.bind(this)} style={style}></div>;
     }
+
+    renderer: WebGLRenderer | undefined;
+    scene: Scene | undefined;
+    componentId: string | undefined;
+
 }
 
 
