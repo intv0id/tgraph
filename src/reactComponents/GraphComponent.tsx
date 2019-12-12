@@ -10,15 +10,15 @@ import * as TrackballControls from "three-trackballcontrols";
 export interface GraphProps<NodeDataType, VertexDataType> { graphData: Graph<NodeDataType, VertexDataType>, graphParams: GraphParameters };
 export interface GraphState { selectedNodeId?: string, selectedVerticeId?: string };
 
-export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, GraphState> {
+export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<GraphProps<NodeDataType, VertexDataType>, GraphState> {
 
     readonly state: GraphState = { selectedNodeId: undefined, selectedVerticeId: undefined };
 
-    drawNode(node: Node<T>, id: string) {
+    drawNode(node: Node<NodeDataType>, id: string) {
         this.scene.add(node);
     }
 
-    drawEdge(edge: Vertex<U>) {
+    drawEdge(edge: Vertex<VertexDataType>) {
         let srcNode = this.props.graphData.nodes[edge.src];
         let dstNode = this.props.graphData.nodes[edge.dst];
         edge.position.addVectors(srcNode.position, dstNode.position).divideScalar(2.0);
@@ -35,10 +35,14 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
     }
 
     draw(renderer: WebGLRenderer) {
-        // Draw nodes
-        for (let id in this.props.graphData.nodes) {
-            this.drawNode(this.props.graphData.nodes[id], id);
-        }
+
+        this.props.graphData.nodes.forEach(
+            (value, key, map) => {
+                console.log(value);
+                this.drawNode(value, key) ;
+            }
+        );
+
         // Draw vertices
         this.props.graphData.vertices.forEach(edge => this.drawEdge(edge));
 
@@ -65,12 +69,6 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
     }
 
     componentDidMount(){
-        this.draw(this.renderer);
-    }
-
-    render() {
-        this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setSize(this.props.graphParams.width, this.props.graphParams.height);
 
         let light = new HemisphereLight(0xffffff, 0.5);
         let directionalLight = new DirectionalLight(0xffffff, 0.5);
@@ -90,6 +88,13 @@ export default class GraphCanvas<T, U> extends Component<GraphProps<T, U>, Graph
 
         this.animate(this.renderer, this.scene, camera, controls);
 
+        this.draw(this.renderer);
+        
+    }
+
+    render() {
+        this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
+        this.renderer.setSize(this.props.graphParams.width, this.props.graphParams.height);
 
         this.componentId = `Graph${Guid.create().toString()}`;
 

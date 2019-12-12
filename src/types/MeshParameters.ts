@@ -5,7 +5,7 @@ import { ShaderTypes } from './Shaders';
 export class MeshParameters<MeshType> {
     constructor(
         size: number = 1,
-        color: string = "ffffff",
+        color: string = "00ff00",
         hoverColor: string = "ff0000",
         shaderType: ShaderTypes = ShaderTypes.BASIC,
         onEnterHover: Function = (mesh: MeshType) => { },

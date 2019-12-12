@@ -1,4 +1,4 @@
-import {nodesCollection, verticesCollection, Node, Vertex} from "../../src/types/GraphComponents"
+import { Node, Vertex } from "../../src/types/GraphComponents"
 import { Graph } from "../../src/types/Graph";
 import { MeshParameters } from "../../src/types/MeshParameters";
 
@@ -31,6 +31,9 @@ export interface IUserData extends IGithubData {
     avatar_url: string,
 };
 
+export interface IRelationData {};
+export interface IFollowsData extends IRelationData {};
+
 export async function getGhData<IUserData> (request: IRequest<IUserData>): Promise<IUserData> {
     let url = `https://api.github.com/users/${request.UserName}`;
     return new Promise(resolve => {
@@ -45,16 +48,15 @@ export async function getGhData<IUserData> (request: IRequest<IUserData>): Promi
 export class githubConnections {
     static nodeParams: MeshParameters<IUserData> = new MeshParameters<IUserData>();
 
-    public static getUserGraph(options:userGraphOptions): Graph<IGithubData,null> {
+    public static async getUserGraph(options:userGraphOptions): Promise<Graph<IGithubData, IRelationData>> {
         let accountsList: string[] = [options.ghUserName];
-        let nodes: nodesCollection<IGithubData> = {};
-        let vertices: verticesCollection<null> = [];
+        let nodes: Map<string,Node<IGithubData>> = new Map<string,Node<IGithubData>>();
+        let vertices: Vertex<IFollowsData>[] = [];
         while (accountsList.length > 0){
-            getGhData(<IRequest<IUserData>> {UserName: accountsList.pop()}).then(
-                ud => nodes[ud.id] = new Node<IUserData>(ud.name, ud.id.toString(), ud, this.nodeParams)
-                );
-            
+            let node = await getGhData(<IRequest<IUserData>> {UserName: accountsList.pop()});
+            nodes.set(node.id.toString(), new Node<IUserData>(node.name, node.id.toString(), node, this.nodeParams));            
         }
-        return new Graph<IGithubData,null>(nodes, vertices);
+        
+        return new Graph<IGithubData,IRelationData>(nodes, vertices);
     }
 }

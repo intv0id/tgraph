@@ -1,8 +1,8 @@
 import { Vector3, Math as ThreeMath } from 'three';
-import { nodesCollection, verticesCollection } from './GraphComponents';
+import { Node, Vertex } from './GraphComponents';
 
 export class Graph<NodeDataType, VerticeDataType> {
-    constructor(nodes: nodesCollection<NodeDataType>, vertices: verticesCollection<VerticeDataType>) {
+    constructor(nodes: Map<string,Node<NodeDataType>>, vertices: Vertex<VerticeDataType>[]) {
         this.nodes = nodes;
         this.vertices = vertices;
     }
@@ -89,6 +89,6 @@ export class Graph<NodeDataType, VerticeDataType> {
             setTimeout(frameIteration.bind(this), 3 * i);
         }
     }
-    nodes: nodesCollection<NodeDataType>;
-    vertices: verticesCollection<VerticeDataType>;
+    nodes: Map<string, Node<NodeDataType>>;
+    vertices: Vertex<VerticeDataType>[];
 }
