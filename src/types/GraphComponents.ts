@@ -6,6 +6,8 @@ export class Node<DataType> extends Mesh {
     constructor(name: string, label: string, data: DataType, opt: MeshParameters<Node<DataType>>) {
         super(CONSTS.geometry.sphere(opt.size), opt.material);
         this.scale.set(opt.size, opt.size, opt.size);
+        let randPos = randomVector3();
+        this.position.set(randPos.x, randPos.y, randPos.z);
         this.name = name;
         this.label = label;
         this.data = data;

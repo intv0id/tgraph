@@ -8,11 +8,6 @@ export class GraphParameters {
     cameraZ: number = 100;
     rotateSpeed: number = 1;
 
-    nodeSize: number = 2.0;
-    edgeSize: number = 0.5;
-    arrowSize: number = 2;
-
-
     clickableNodes: boolean = true;
     hoverableNodes: boolean = true;
     clickableVertices: boolean = false;

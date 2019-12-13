@@ -19,8 +19,8 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     drawEdge(edge: Vertex<VertexDataType>) {
-        let srcNode = this.props.graphData.nodes[edge.src];
-        let dstNode = this.props.graphData.nodes[edge.dst];
+        let srcNode = this.props.graphData.nodes.get(edge.src);
+        let dstNode = this.props.graphData.nodes.get(edge.dst);
         edge.position.addVectors(srcNode.position, dstNode.position).divideScalar(2.0);
         edge.scale.set(edge.opt.size, edge.opt.size, dstNode.position.distanceTo(srcNode.position));
         edge.lookAt(dstNode.position);
@@ -37,8 +37,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     draw(renderer: WebGLRenderer) {
 
         this.props.graphData.nodes.forEach(
-            (value, key, map) => {
-                console.log(value);
+            (value, key, map) => {              
                 this.drawNode(value, key) ;
             }
         );
@@ -54,10 +53,10 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         document.getElementById(this.componentId).append(renderer.domElement);
     }
 
-    animate(renderer: WebGLRenderer, scene: Scene, camera: Camera, controls: TrackballControls) {
-        window.requestAnimationFrame((() => this.animate(renderer, scene, camera, controls)).bind(this));
-        controls.update();
-        renderer.render(scene, camera);
+    animate() {
+        window.requestAnimationFrame(this.animate.bind(this));
+        this.controls.update();
+        this.renderer.render(this.scene, this.camera);
     }
 
     onClick() {
@@ -74,22 +73,31 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         let directionalLight = new DirectionalLight(0xffffff, 0.5);
         directionalLight.position.set(1, 1, 1);
 
-        let camera = new PerspectiveCamera(70, this.props.graphParams.width / this.props.graphParams.height);
-        camera.position.setZ(this.props.graphParams.cameraZ);
+        this.camera = new PerspectiveCamera(70, this.props.graphParams.width / this.props.graphParams.height);
+        this.camera.position.setZ(this.props.graphParams.cameraZ);
 
-        let controls = new TrackballControls(camera, this.renderer.domElement);
-        controls.rotateSpeed = this.props.graphParams.rotateSpeed;
+        this.controls = new TrackballControls(this.camera, this.renderer.domElement);        
+        this.controls.rotateSpeed = this.props.graphParams.rotateSpeed;
 
-        camera.add(light);
-        camera.add(directionalLight);
+        this.camera.add(light);
+        this.camera.add(directionalLight);
 
         this.scene = new Scene();
-        this.scene.add(camera);
+        this.scene.add(this.camera);
 
-        this.animate(this.renderer, this.scene, camera, controls);
+        this.animate();
 
         this.draw(this.renderer);
         
+    }
+
+    save() {
+        let renderWidth = 2560 / (window.devicePixelRatio || 1);
+
+        let link = document.createElement('a');
+        link.download = 'tgraph.png';
+        link.href = this.renderer.domElement.toDataURL('image/png');
+        link.click();
     }
 
     render() {
@@ -110,6 +118,8 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
     renderer: WebGLRenderer | undefined;
     scene: Scene | undefined;
+    camera: Camera | undefined;
+    controls: TrackballControls | undefined;
     componentId: string | undefined;
 
 }
