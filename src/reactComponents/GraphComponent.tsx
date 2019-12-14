@@ -157,11 +157,11 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     componentDidMount() {
+        document.getElementById(this.componentId).append(this.renderer.domElement);
         this.setCanvasSize();
         this.designScene();
-        this.animate();
         this.draw();
-        document.getElementById(this.componentId).append(this.renderer.domElement);
+        this.animate();
     }
 
     componentWillUnmount() {
