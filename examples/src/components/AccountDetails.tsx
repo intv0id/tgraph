@@ -17,7 +17,7 @@ export class AccountDetails extends Component<IAccountDetailsProps, IAccountDeta
     move(){
         let htmlElement = document.getElementById(this.componentId);
         htmlElement.style.top = `${this.props.mouseLocation.y.toString()}px`;
-        htmlElement.style.left = `${this.props.mouseLocation.x.toString()}px`;        
+        htmlElement.style.left = `${this.props.mouseLocation.x.toString()}px`;
     }
 
     componentDidMount(){
