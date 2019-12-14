@@ -22,7 +22,7 @@
         "src/types/*.ts", 
         "src/components/*.tsx",
         "examples/src/*.ts",
-        "examples/src/*.tsx",
+        "examples/src/*.tsx", "examples/src/components/app.tsx", "examples/src/components/github.tsx",
     ],
     "exclude": [
         "node_modules",

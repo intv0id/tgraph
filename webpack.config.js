@@ -3,7 +3,7 @@ module.exports = {
   mode: 'development',
   entry: {
     tgraph: path.join(__dirname, 'src', 'index.tsx'),
-    GithubGraph: path.join(__dirname, "examples", "src", "github.tsx")
+    GithubGraph: path.join(__dirname, "examples", "src", "main.tsx")
   },
   output: {
     library: 'tgraph',

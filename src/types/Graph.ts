@@ -96,7 +96,7 @@ export class Graph<NodeDataType, VertexDataType> {
         });
     }
 
-    optimize(iterations: number = 10000, forceStrength: number = 10, dampening: number = 0.01, maxVelocity: number = 2.0, maxDistance: number = 50, delta: Vector3 = new Vector3()) {
+    optimize(iterations: number = 10, forceStrength: number = 10, dampening: number = 0.01, maxVelocity: number = 2.0, maxDistance: number = 50, delta: Vector3 = new Vector3()) {
         let frameIteration = () => {
             dampening -= 0.01 / iterations;
 

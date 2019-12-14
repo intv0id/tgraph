@@ -2,7 +2,14 @@ import { Vector3, Mesh } from 'three';
 import CONSTS from '../const';
 import { randomVector3 } from '../utils';
 import { MeshParameters } from './MeshParameters';
-export class Node<DataType> extends Mesh {
+
+export interface IGraphComponent<T> {
+    label: string,
+    data: T,
+    opt: MeshParameters<IGraphComponent<T>>
+}
+
+export class Node<DataType> extends Mesh implements IGraphComponent<DataType> {
     constructor(name: string, label: string, data: DataType, opt: MeshParameters<Node<DataType>>) {
         super(CONSTS.geometry.sphere(opt.size), opt.material);
         this.scale.set(opt.size, opt.size, opt.size);
@@ -11,18 +18,17 @@ export class Node<DataType> extends Mesh {
         this.name = name;
         this.label = label;
         this.data = data;
-        this.size = opt.size;
         this.force = randomVector3();
+        this.opt = opt;
     }
     name: string;
-    color: string;
-    hoverColor: string;
     label: string;
-    size: number;
-    force: Vector3;
+    force: Vector3; //TODO Delete
     data: DataType;
+    opt: MeshParameters<Node<DataType>>;
 }
-export class Vertex<DataType> extends Mesh {
+
+export class Vertex<DataType> extends Mesh implements IGraphComponent<DataType> {
     constructor(src: string, dst: string, label: string, data: DataType, directed: Boolean, opt: MeshParameters<Vertex<DataType>>) {
         super(CONSTS.geometry.cylinder(opt.size), opt.material);
         this.scale.set(opt.size, opt.size, opt.size);
@@ -45,3 +51,5 @@ export class Vertex<DataType> extends Mesh {
     opt: MeshParameters<Vertex<DataType>>;
     arrow: Mesh | undefined;
 };
+
+export type GraphElement = Node<any> | Vertex<any>;

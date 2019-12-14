@@ -1,6 +1,7 @@
 import { Node, Vertex } from "../../src/types/GraphComponents"
 import { Graph } from "../../src/types/Graph";
 import { MeshParameters } from "../../src/types/MeshParameters";
+import { ShaderTypes } from "../../src/types/Shaders";
 
 export type userGraphOptions = {
     ghUserName: string,
@@ -38,15 +39,18 @@ export interface IFollowsData extends IRelationData { };
 export interface IFollowsQuery {login: string, id: string, level: number}
 
 export class githubConnections {
-    static nodeParams: MeshParameters<IUserData> = new MeshParameters<IUserData>(1, "00ff00", "ffff00");
-    static vertexParams: MeshParameters<IRelationData> = new MeshParameters<IRelationData>(1, "0000ff", "ff00ff");
+    constructor(rootNodeParams: MeshParameters<IUserData>, nodeParams: MeshParameters<IUserData>, vertexParams: MeshParameters<IRelationData>){
+        this.rootNodeParams = rootNodeParams;
+        this.nodeParams = nodeParams;
+        this.vertexParams = vertexParams;
+    }
 
-    public static async getUserGraph(options: userGraphOptions): Promise<Graph<IGithubData, IRelationData>> {
+    public async getUserGraph(options: userGraphOptions): Promise<Graph<IGithubData, IRelationData>> {
         let nodes: Map<string, Node<IGithubData>> = new Map<string, Node<IGithubData>>();
         let vertices: Vertex<IFollowsData>[] = [];
 
         let rootNode = await this.getUserData(<IRequest>{ UserName: options.ghUserName });
-        nodes.set(rootNode.id.toString(), new Node<IUserData>(rootNode.login, rootNode.id.toString(), rootNode, this.nodeParams));
+        nodes.set(rootNode.id.toString(), new Node<IUserData>(rootNode.login, rootNode.id.toString(), rootNode, this.rootNodeParams));
 
         let accountToGetFollowersList: IFollowsQuery[] = [{login: rootNode.login, id: rootNode.id.toString(), level: 0}];
         while (accountToGetFollowersList.length > 0) {
@@ -67,7 +71,7 @@ export class githubConnections {
         return new Graph<IGithubData, IRelationData>(nodes, vertices);
     }
 
-    static async getUserData(request: IRequest): Promise<IUserData> {
+    async getUserData(request: IRequest): Promise<IUserData> {
         let url = `https://api.github.com/users/${request.UserName}`;
         return new Promise(resolve => {
             fetch(url)
@@ -78,7 +82,7 @@ export class githubConnections {
         });
     };
 
-    static async getFollowers(request: IRequest): Promise<IUserData[]> {
+    async getFollowers(request: IRequest): Promise<IUserData[]> {
         let url = `https://api.github.com/users/${request.UserName}/followers`;
         return new Promise(resolve => {
             fetch(url)
@@ -88,4 +92,8 @@ export class githubConnections {
                 });
         });
     };
+
+    rootNodeParams: MeshParameters<IGithubData>;
+    nodeParams: MeshParameters<IGithubData>;
+    vertexParams: MeshParameters<IRelationData>;
 }
