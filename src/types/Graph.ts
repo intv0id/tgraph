@@ -90,7 +90,7 @@ export class Graph<NodeDataType, VertexDataType> {
             edge.lookAt(dst.position);
             edge.scale.z = mag;
             if (edge.arrow) {
-                edge.arrow.position.copy(dst.position);
+                edge.arrow.position.copy(edge.position);
                 edge.arrow.lookAt(dst.position);
             }
         });
