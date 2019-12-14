@@ -38,6 +38,8 @@ export interface IFollowsData extends IRelationData { };
 
 export interface IFollowsQuery {login: string, id: string, level: number}
 
+export interface IUserGraphContract {graph: Graph<IGithubData, IRelationData>, rootNodeId: string};
+
 export class githubConnections {
     constructor(rootNodeParams: MeshParameters<IUserData>, nodeParams: MeshParameters<IUserData>, vertexParams: MeshParameters<IRelationData>){
         this.rootNodeParams = rootNodeParams;
@@ -45,7 +47,7 @@ export class githubConnections {
         this.vertexParams = vertexParams;
     }
 
-    public async getUserGraph(options: userGraphOptions): Promise<Graph<IGithubData, IRelationData>> {
+    public async getUserGraph(options: userGraphOptions): Promise<IUserGraphContract> {
         let nodes: Map<string, Node<IGithubData>> = new Map<string, Node<IGithubData>>();
         let vertices: Vertex<IFollowsData>[] = [];
 
@@ -68,7 +70,7 @@ export class githubConnections {
             }
         }
 
-        return new Graph<IGithubData, IRelationData>(nodes, vertices);
+        return {graph: new Graph<IGithubData, IRelationData>(nodes, vertices), rootNodeId: rootNode.id.toString()};
     }
 
     async getUserData(request: IRequest): Promise<IUserData> {

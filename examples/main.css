@@ -17,50 +17,28 @@ h1 {
   margin-bottom: 14px;
 }
 
-a {
-  cursor: pointer;
-  text-decoration: none;
-
-  -webkit-transition: 0.15s color ease;
-     -moz-transition: 0.15s color ease;
-      -ms-transition: 0.15s color ease;
-       -o-transition: 0.15s color ease;
-          transition: 0.15s color ease;
-}
-
-.app {
-  height: 100%;
-  position: absolute;
-  width: 100%;
-}
-
-.description {
-  background-color: #fff;
-  background-color: rgba(255, 255, 255, 0.8);
-  left: 30px;
-  margin: 10px;
-  position: absolute;
-  top: 30px;
-  width: 400px;
-  z-index: 100;
-}
-
-.description a {
-  color: #6a9fb5;
-}
-
-.description a:hover {
-  color: #b7ecff;
-}
-
-.label {
+.AccountFullView {
   background-color: rgba(255, 206, 116, 0.8);
   padding: 10px;
+  width: 25%;
   position: absolute;
   bottom:5;
   left:5;
+  overflow: scroll;
 }
 
-.GraphApp {
-  display: inline-block;
+#GraphApp, #app {
+  height: 100%;
+  width: 100%;
+}
+
+.graphCanvas {
+  width: 75%;
+  height: 100%;
+  float: right;
+}
+
+.AccountOverview {
+  background-color: rgba(255, 238, 0, 0.8);
+  position: absolute;
 }

@@ -8,31 +8,30 @@ import { Scene, HemisphereLight, DirectionalLight, Camera, PerspectiveCamera, We
 import * as TrackballControls from "three-trackballcontrols";
 import { array } from 'prop-types';
 
-export interface GraphProps<NodeDataType, VertexDataType> { graphData: Graph<NodeDataType, VertexDataType>, graphParams: GraphParameters };
-export interface GraphState {};
+export interface GraphProps<NodeDataType, VertexDataType> {
+    graphData: Graph<NodeDataType, VertexDataType>,
+    graphParams: GraphParameters
+};
+export interface GraphState {
+    canvasSize: Vector2;
+};
 
 export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<GraphProps<NodeDataType, VertexDataType>, GraphState> {
 
-    constructor(props){
+    constructor(props) {
         super(props);
+
+        this.state = { canvasSize: new Vector2() };
+
+        this.componentId = `Graph${Guid.create().toString()}`;
 
         this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
-        let light = new HemisphereLight(0xffffff, 0.5);
-        let directionalLight = new DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(1, 1, 1);
+        this.light = new HemisphereLight(0xffffff, 0.5);
+        this.directionalLight = new DirectionalLight(0xffffff, 0.5);
+        this.directionalLight.position.set(1, 1, 1);
 
-        this.camera = new PerspectiveCamera(70, this.props.graphParams.width / this.props.graphParams.height);
-        this.camera.position.setZ(this.props.graphParams.cameraZ);
-
-        this.controls = new TrackballControls(this.camera, this.renderer.domElement);        
-        this.controls.rotateSpeed = this.props.graphParams.rotateSpeed;
-
-        this.camera.add(light);
-        this.camera.add(directionalLight);
-
-        this.scene = new Scene();
-        this.scene.add(this.camera);
+        window.addEventListener('resize', this.setCanvasSize);
     }
 
     drawNode(node: Node<NodeDataType>, id: string) {
@@ -47,6 +46,30 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         }
     }
 
+    setCanvasSize() {
+        let htmlElement = document.getElementById(this.componentId);
+        this.setState({
+            ...this.state,
+            canvasSize: new Vector2(htmlElement.clientWidth, htmlElement.clientHeight)
+        });
+    }
+
+    designScene() {
+        this.renderer.setSize(this.state.canvasSize.x, this.state.canvasSize.y);
+
+        this.camera = new PerspectiveCamera(70, this.state.canvasSize.x / this.state.canvasSize.y);
+        this.camera.position.setZ(this.props.graphParams.cameraZ);
+
+        this.controls = new TrackballControls(this.camera, this.renderer.domElement);
+        this.controls.rotateSpeed = this.props.graphParams.rotateSpeed;
+
+        this.camera.add(this.light);
+        this.camera.add(this.directionalLight);
+
+        this.scene = new Scene();
+        this.scene.add(this.camera);
+    }
+
     draw() {
         this.props.graphData.nodes.forEach(
             (value, key, map) => this.drawNode(value, key)
@@ -55,14 +78,14 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.props.graphData.vertices.forEach(edge => this.drawEdge(edge));
     }
 
-    undraw(){
+    undraw() {
         this.scene.children.forEach(c => this.scene.remove(c));
         this.scene.autoUpdate = true;
     }
 
     animate() {
         window.requestAnimationFrame(this.animate.bind(this));
-        if (this.props.graphParams.runOptimization) {            
+        if (this.props.graphParams.runOptimization) {
             this.props.graphData.optimize();
         }
         this.controls.update();
@@ -70,7 +93,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     onClick(event: MouseEvent) {
-        
+
         let intersects: Intersection[] = this.cursorIntersects(event);
         if (intersects.length !== 0) {
             let element = intersects[0].object as GraphElement;
@@ -87,7 +110,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         } else {
             if (this.selectedElement === undefined) {
                 this.selectElement(intersects[0].object as GraphElement)
-            } else if (this.selectedElement  !== (intersects[0].object as GraphElement)) {
+            } else if (this.selectedElement !== (intersects[0].object as GraphElement)) {
                 this.unselectElement();
                 this.selectElement(intersects[0].object as GraphElement);
             }
@@ -104,7 +127,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.selectedElement = undefined;
     }
 
-    selectElement(element: GraphElement) {       
+    selectElement(element: GraphElement) {
         element.material = element.opt.hoverMaterial;
         element.material.needsUpdate = true;
         this.selectedElement = element;
@@ -129,18 +152,21 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         return intersects
     }
 
-    componentDidMount(){        
+    componentDidMount() {
+        this.setCanvasSize();
+        this.designScene();
         this.animate();
         this.draw();
         document.getElementById(this.componentId).append(this.renderer.domElement);
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
+        this.designScene();
         this.undraw();
         this.draw();
     }
 
-    componentWillUnmount (){
+    componentWillUnmount() {
         this.renderer.domElement.remove();
     }
 
@@ -151,27 +177,19 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         link.click();
     }
 
-    render() {        
-        this.renderer.setSize(this.props.graphParams.width, this.props.graphParams.height);
-
-        this.componentId = `Graph${Guid.create().toString()}`;
-
-        //TODO Resize & show save button
-
-        const style = {
-            width: `${this.props.graphParams.width}px`,
-            height: `${this.props.graphParams.height}px`
-        };
-
-        return <div 
-            className="graphCanvas" 
-            id={this.componentId} 
-            onClick={this.onClick.bind(this)} 
-            onMouseMove={this.onMouseMove.bind(this)} 
-            style={style}>
-            </div>;
+    render() {
+        //TODO & show save button
+        return <div
+            className="graphCanvas"
+            id={this.componentId}
+            onClick={this.onClick.bind(this)}
+            onMouseMove={this.onMouseMove.bind(this)}
+        >
+        </div>;
     }
 
+    light: HemisphereLight;
+    directionalLight: DirectionalLight;
     renderer: WebGLRenderer | undefined;
     scene: Scene | undefined;
     camera: Camera | undefined;

@@ -2,9 +2,6 @@ export class GraphParameters {
     runOptimization: boolean = true;
     showSave: boolean = true;
 
-    width: number = 1000;
-    height: number = 500;
-
     cameraZ: number = 100;
     rotateSpeed: number = 1;
 
