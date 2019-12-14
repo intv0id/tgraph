@@ -64,7 +64,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
     render() {
         let hoverInfos = null;
         if (this.state.selectedElement && this.state.selectedElement.name){
-            hoverInfos = <AccountDetails 
+            hoverInfos = <AccountDetails
                 account={this.state.selectedElement as Node<IUserData>}
                 mouseLocation={this.mouseLocation}
             />;
@@ -109,7 +109,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
             ShaderTypes.BASIC,
             this.setSelectedElement.bind(this),
             this.unSetSelectedElement.bind(this),
-            (n) => {},            
+            (n) => {},
         )
     );
     readonly state: IAppState = {
