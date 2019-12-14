@@ -6,7 +6,7 @@ import GraphCanvas from '../../../src/reactComponents/GraphComponent';
 import { Graph } from '../../../src/types/Graph';
 import { Node, GraphElement } from '../../../src/types/GraphComponents';
 import { ShaderTypes, MeshParameters } from '../../../src';
-import { AccountDetails } from './AccountDetails';
+import { AccountOverview } from './AccountOverview';
 import { AccountFullView } from './AccountFullView';
 import { Vector2 } from 'three';
 
@@ -64,7 +64,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
     render() {
         let hoverInfos = null;
         if (this.state.selectedElement && this.state.selectedElement.name){
-            hoverInfos = <AccountDetails
+            hoverInfos = <AccountOverview
                 account={this.state.selectedElement as Node<IUserData>}
                 mouseLocation={this.mouseLocation}
             />;

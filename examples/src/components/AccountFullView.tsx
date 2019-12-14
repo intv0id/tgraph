@@ -42,7 +42,11 @@ export class AccountFullView extends Component<IAccountFullViewProps, IAccountFu
                     <p><b>Location : </b>{this.props.account.data.location}</p> :
                     null
             }
-            <p><q>{this.props.account.data.bio}</q></p>
+            {
+                this.props.account.data.bio ?
+                    <p><q>{this.props.account.data.bio}</q></p> :
+                    null
+            }
             <p>
                 {this.props.account.data.followers} 🔼
                 {"   "}
