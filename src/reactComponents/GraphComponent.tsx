@@ -11,7 +11,7 @@ export interface IGraphCanvasProps<NodeDataType, VertexDataType> {
     graphData: Graph<NodeDataType, VertexDataType>,
     graphParams: GraphParameters
 };
-export interface IGraphCanvasState {};
+export interface IGraphCanvasState { };
 
 export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphCanvasProps<NodeDataType, VertexDataType>, IGraphCanvasState> {
 
@@ -29,7 +29,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.directionalLight.position.set(1, 1, 1);
 
         window.addEventListener('resize', () => {
-            this.setCanvasSize(); 
+            this.setCanvasSize();
             this.designScene();
             this.undraw();
             this.draw();
@@ -50,7 +50,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
     setCanvasSize() {
         let htmlElement = document.getElementById(this.componentId);
-        this.canvasSize = new Vector2(htmlElement.clientWidth, htmlElement.clientHeight);     
+        this.canvasSize = new Vector2(htmlElement.clientWidth, htmlElement.clientHeight);
     }
 
     designScene() {
@@ -148,16 +148,16 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
                 this.props.graphData.vertices
             )
         );
-        return intersects
+        return intersects;
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.undraw();
         this.draw();
     }
 
     componentDidMount() {
-        this.setCanvasSize();        
+        this.setCanvasSize();
         this.designScene();
         this.animate();
         this.draw();
