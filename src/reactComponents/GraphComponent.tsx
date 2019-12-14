@@ -33,7 +33,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
         window.addEventListener('resize', () => {
             this.designScene();
-            this.setCanvasSize(); 
+            this.setCanvasSize();
             this.undraw();
             this.draw();
         });
