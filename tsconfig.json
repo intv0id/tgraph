@@ -9,17 +9,24 @@
         "sourceMap": true,
         "target": "es2016",
         "moduleResolution": "node",
-        //"allowJs": true,
+        "allowJs": false,
         "typeRoots": [
             "./node_modules/@types",
             "./@types"
         ],
+        "jsx": "react",
     },
     "include": [
         "src/*.ts",
+        "src/*.tsx", 
+        "src/types/*.ts", 
+        "src/components/*.tsx",
+        "examples/src/*.ts",
+        "examples/src/*.tsx", "examples/src/components/app.tsx", "examples/src/components/github.tsx",
     ],
     "exclude": [
         "node_modules",
-        "**/node_modules/*"
+        "**/node_modules/*",
+        "src/old/*"
     ]
 }

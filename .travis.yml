@@ -12,20 +12,11 @@ jobs:
   include:
     - stage: "Generate documentation"
       install:
-        - git clone https://github.com/TypeStrong/typedoc.git
-        - cd typedoc
-        - npm install
-        - cd ..
-        #- npm install typedoc --global
-
-      before_script:
-        - npm install
+        - npm install -D
 
       script:
         - npm run build
-        - mkdir docs
-        - ./typedoc/bin/typedoc --out docs src
-        #- typedoc --out docs tgraph
+        - npx typedoc --out docs src
         - cp -r examples dist ressources docs/
         - touch docs/.nojekyll
 
