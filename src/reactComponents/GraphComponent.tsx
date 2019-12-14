@@ -6,17 +6,14 @@ import { GraphParameters } from '../types/GraphParameters';
 import { Node, Vertex, IGraphComponent, GraphElement } from '../types/GraphComponents';
 import { Scene, HemisphereLight, DirectionalLight, Camera, PerspectiveCamera, WebGLRenderer, Vector2, Raycaster, Intersection } from 'three';
 import * as TrackballControls from "three-trackballcontrols";
-import { array } from 'prop-types';
 
-export interface GraphProps<NodeDataType, VertexDataType> {
+export interface IGraphCanvasProps<NodeDataType, VertexDataType> {
     graphData: Graph<NodeDataType, VertexDataType>,
     graphParams: GraphParameters
 };
-export interface GraphState {
-    canvasSize: Vector2;
-};
+export interface IGraphCanvasState {};
 
-export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<GraphProps<NodeDataType, VertexDataType>, GraphState> {
+export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphCanvasProps<NodeDataType, VertexDataType>, IGraphCanvasState> {
 
     constructor(props) {
         super(props);
@@ -32,8 +29,8 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.directionalLight.position.set(1, 1, 1);
 
         window.addEventListener('resize', () => {
-            this.designScene();
             this.setCanvasSize(); 
+            this.designScene();
             this.undraw();
             this.draw();
         });
@@ -53,16 +50,13 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
     setCanvasSize() {
         let htmlElement = document.getElementById(this.componentId);
-        this.setState({
-            ...this.state,
-            canvasSize: new Vector2(htmlElement.clientWidth, htmlElement.clientHeight)
-        });
+        this.canvasSize = new Vector2(htmlElement.clientWidth, htmlElement.clientHeight);     
     }
 
     designScene() {
-        this.renderer.setSize(this.state.canvasSize.x, this.state.canvasSize.y);
+        this.renderer.setSize(this.canvasSize.x, this.canvasSize.y);
 
-        this.camera = new PerspectiveCamera(70, this.state.canvasSize.x / this.state.canvasSize.y);
+        this.camera = new PerspectiveCamera(70, this.canvasSize.x / this.canvasSize.y);
         this.camera.position.setZ(this.props.graphParams.cameraZ);
 
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
@@ -157,17 +151,17 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         return intersects
     }
 
+    componentDidUpdate(){
+        this.undraw();
+        this.draw();
+    }
+
     componentDidMount() {
-        this.setCanvasSize();
+        this.setCanvasSize();        
         this.designScene();
         this.animate();
         this.draw();
         document.getElementById(this.componentId).append(this.renderer.domElement);
-    }
-
-    componentDidUpdate() {
-        this.undraw();
-        this.draw();
     }
 
     componentWillUnmount() {
@@ -199,7 +193,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     controls: TrackballControls | undefined;
     componentId: string | undefined;
     selectedElement: GraphElement | undefined = undefined;
-
+    canvasSize: Vector2;
 }
 
 
