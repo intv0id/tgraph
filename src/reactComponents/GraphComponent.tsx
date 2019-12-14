@@ -31,7 +31,12 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.directionalLight = new DirectionalLight(0xffffff, 0.5);
         this.directionalLight.position.set(1, 1, 1);
 
-        window.addEventListener('resize', this.setCanvasSize);
+        window.addEventListener('resize', () => {
+            this.designScene();
+            this.setCanvasSize(); 
+            this.undraw();
+            this.draw();
+        });
     }
 
     drawNode(node: Node<NodeDataType>, id: string) {
@@ -161,7 +166,6 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     componentDidUpdate() {
-        this.designScene();
         this.undraw();
         this.draw();
     }
@@ -178,7 +182,6 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     render() {
-        //TODO & show save button
         return <div
             className="graphCanvas"
             id={this.componentId}
