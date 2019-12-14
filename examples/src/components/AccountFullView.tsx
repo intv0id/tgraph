@@ -12,7 +12,7 @@ export interface IAccountFullViewProps {
 export class AccountFullView extends Component<IAccountFullViewProps, IAccountFullViewState>{
     render() {
         return <div className="AccountFullView">
-            <p>{this.props.account.name}</p>
+            <h2 className="accountLogin">{this.props.account.name}</h2>
             <br/>
             <img src={this.props.account.data.avatar_url}/>
             <br/>

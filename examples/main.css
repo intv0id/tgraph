@@ -42,3 +42,7 @@ h1 {
   background-color: rgba(255, 238, 0, 0.8);
   position: absolute;
 }
+
+h2.accountLogin {
+  text-align: center;
+}
