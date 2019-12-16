@@ -14,7 +14,7 @@ import {SearchPanel} from './SearchPanel'
 import { PanelKinds } from '../panels';
 
 export interface IAppState {
-    displayPanel: PanelKinds;
+    displayPanel: PanelKinds,
     ghLogin: string,
     graphData: Graph<IGithubData, IRelationData>,
     selectedElement: GraphElement,
@@ -23,6 +23,10 @@ export interface IAppState {
 
 export interface IAppProps {
     graphParams: GraphParameters
+}
+
+export interface IWindowHistoryState {
+    login: string
 }
 
 export class GithubGraphApp extends Component<IAppProps, IAppState>{
@@ -42,13 +46,18 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
         });
     }
 
-    async setGraphData(login: string) {
+    async setGraphData(login: string, addToHistory: boolean=true) {
         let userGraph: IUserGraphContract = await this.graphGetter.getUserGraph({
             ghUserName: login,
             levels: 1,
             followersPerAccountLimit: 10,
             reposPerAccountLimit: 10,
         });
+        if (addToHistory) {
+            window.history.pushState( {login: login} , `${login} Github graph`, `?${login}` );
+        } else {
+            window.history.replaceState( {login: login} , `${login} Github graph`, `?${login}` );
+        }
         this.setState({
             ...this.state,
             ghLogin: login,
@@ -62,7 +71,9 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
     }
 
     async componentDidMount() {
-        await this.setGraphData(this.state.ghLogin);
+        let login = window.location.search.slice(1) || this.state.ghLogin;
+        await this.setGraphData(login);
+        window.onpopstate = () => this.setGraphData(window.location.search.slice(1), false);
     }
 
     displayPanel(panelType: PanelKinds){
@@ -100,9 +111,9 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
                 </div>
 
                 <div className="buttons">
-                    <span className="searchButton" title="Search a github user" onClick={() => this.displayPanel(PanelKinds.SEARCH)}>🔎</span>
-                    <span className="githubButton" title="Discover tgraph on Github" onClick={() => window.location.href="https://github.com/intv0id/tgraph"}>{"</>"}</span>
-                    <span className="helpButton" title="Help" onClick={() => this.displayPanel(PanelKinds.HELP)}>?</span>
+                    <div className="searchButton" title="Search a github user" onClick={() => this.displayPanel(PanelKinds.SEARCH)}><span>🔎</span></div>
+                    <div className="githubButton" title="Discover tgraph on Github" onClick={() => window.location.href="https://github.com/intv0id/tgraph"}><span>{"</>"}</span></div>
+                    <div className="helpButton" title="Help" onClick={() => this.displayPanel(PanelKinds.HELP)}><span>?</span></div>
                 </div>
 
                 <GraphCanvas<IGithubData, IRelationData>

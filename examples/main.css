@@ -57,7 +57,7 @@ body {
   right: 35px;
 }
 
-.buttons>span {
+.buttons>div {
   height: 74px;
   width: 74px;
   text-align: center;
@@ -71,13 +71,16 @@ body {
   border-width: 1px;
   border-color: rgb(229, 28, 35);
   margin: 10px;
-  vertical-align: middle;
   cursor: pointer;
 }
 
-.buttons>span:hover {
+.buttons>div:hover {
   background-color: black;
   border-color: gray;
+}
+
+.buttons>div>span {
+  vertical-align: middle;
 }
 
 .helpButton {
