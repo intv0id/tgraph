@@ -81,11 +81,11 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
 
                 <div className='titleBar'>
                     <h1>Github relations finder</h1>
-                    <a href="https://github.com/intv0id/tgraph" className="githubLink">
-                        <img
-                            src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-                            alt="tgraph on GitHub" />
-                    </a>
+                </div>
+
+                <div className="buttons">
+                    <span className="githubButton" title="Discover tgraph on Github" onClick={() => window.location.href="https://github.com/intv0id/tgraph"}>{"</>"}</span>
+                    <span className="helpButton" title="Help">?</span>
                 </div>
 
                 <GraphCanvas<IGithubData, IRelationData>

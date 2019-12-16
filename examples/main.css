@@ -25,17 +25,6 @@ body {
   margin-bottom: 14px;
 }
 
-.titleBar>.githubLink{
-  position: fixed;
-  top:0px;
-  right:0px;
-  border: 0;
-}
-
-.titleBar>.githubLink>img {
-  height: 80px;
-}
-
 #GraphApp, #app {
   height: 100%;
   width: 100%;
@@ -59,6 +48,43 @@ body {
   height: 100%;
   position: absolute;
   overflow: scroll;
+}
+
+.buttons {
+  width: 94px;
+  position: absolute;
+  bottom: 35px;
+  right: 35px;
+}
+
+.buttons>span {
+  height: 74px;
+  width: 74px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bolder;
+  color: ivory;
+  background-color: rgba(255, 0, 0, 0.8);
+  border-radius: 38px;
+  display: inline-block;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(229, 28, 35);
+  margin: 10px;
+  vertical-align: middle;
+}
+
+.buttons>span:hover {
+  background-color: black;
+  border-color: gray;
+}
+
+.helpButton {
+  cursor: help;
+}
+
+.githubButton {
+  cursor: pointer;
 }
 
 .AccountFullView>h2.accountLogin {
