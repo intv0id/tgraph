@@ -119,7 +119,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
 
                 <GraphCanvas<IGithubData, IRelationData>
                     graphData={this.state.graphData}
-                    graphParams={this.props.graphParams} 
+                    graphParams={this.props.graphParams}
                     customMenuActions={new Map<string, IMenuAction>()}/>
 
                 {rootNodeInfos}
