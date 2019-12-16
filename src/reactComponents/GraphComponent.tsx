@@ -86,7 +86,12 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
             }
         );
         document.addEventListener('click', () => {
-            this.setState({...this.state, displayMenu: false, menuLocation: undefined});
+            this.setState({ ...this.state, displayMenu: false, menuLocation: undefined });
+        });
+        document.addEventListener('keyup', (e: MouseEvent) => {
+            if (e.which == 27) {
+                this.setState({ ...this.state, displayMenu: false, menuLocation: undefined });
+            }
         });
     }
 
@@ -153,7 +158,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
             let element = this.selectedElement;
             element.material = element.opt.material;
             element.material.needsUpdate = true;
-            if (element instanceof Vertex && element.arrow){
+            if (element instanceof Vertex && element.arrow) {
                 element.arrow.material = element.opt.material;
                 element.arrow.material.needsUpdate = true;
             }
@@ -165,7 +170,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     selectElement(element: GraphElement) {
         element.material = element.opt.hoverMaterial;
         element.material.needsUpdate = true;
-        if (element instanceof Vertex && element.arrow){
+        if (element instanceof Vertex && element.arrow) {
             element.arrow.material = element.opt.hoverMaterial;
             element.arrow.material.needsUpdate = true;
         }
