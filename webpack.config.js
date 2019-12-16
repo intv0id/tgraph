@@ -13,19 +13,25 @@ module.exports = {
     filename: '[name].js',
   },
   module: {
-    rules: [{
-      test: /\.ts(x?)$/,
-      include: [
-        path.join(__dirname, 'src'),
-        path.join(__dirname, 'examples', 'src'),
-      ],
-      exclude: /node_modules/,
-      loader: 'ts-loader',
-      options: { allowTsInNodeModules: true },
-    }]
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        include: [
+          path.join(__dirname, 'src'),
+          path.join(__dirname, 'examples', 'src'),
+        ],
+        exclude: /node_modules/,
+        loaders: 'ts-loader',
+        options: { allowTsInNodeModules: true },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx' ]
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css' ]
   },
   devtool: 'source-map',
 };

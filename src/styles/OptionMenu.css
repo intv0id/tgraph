@@ -1,0 +1,30 @@
+.menuContainer {
+    background-color: rgba(172, 172, 172, 0.3);
+    padding: 0px;
+    border: 1px;
+    border-style: solid;
+    border-radius: 2px;
+}
+
+.menuList { 
+    list-style: none;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.menuItem {
+    margin: 5px;
+    width: 100%
+}
+
+.menuItem:hover {
+    background-color: ivory;
+}
+
+.menuLinkAction {
+    color: black;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-decoration: none;
+}

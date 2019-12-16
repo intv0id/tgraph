@@ -6,19 +6,23 @@ import { GraphParameters } from '../types/GraphParameters';
 import { Node, Vertex, GraphElement } from '../types/GraphComponents';
 import { Scene, HemisphereLight, DirectionalLight, Camera, PerspectiveCamera, WebGLRenderer, Vector2, Raycaster, Intersection } from 'three';
 import * as TrackballControls from "three-trackballcontrols";
+import { OptionMenu } from './OptionMenu';
+import { IMenuAction } from '../types/MenuAction';
+import { mergeMaps } from '../utils';
 
 export interface IGraphCanvasProps<NodeDataType, VertexDataType> {
     graphData: Graph<NodeDataType, VertexDataType>,
-    graphParams: GraphParameters
+    graphParams: GraphParameters,
+    customMenuActions: Map<string, IMenuAction>,
 };
-export interface IGraphCanvasState { };
+export interface IGraphCanvasState { displayMenu: boolean, menuLocation: Vector2 | undefined };
 
 export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphCanvasProps<NodeDataType, VertexDataType>, IGraphCanvasState> {
 
     constructor(props) {
         super(props);
 
-        this.state = { canvasSize: new Vector2() };
+        this.state = { displayMenu: false, menuLocation: undefined };
 
         this.componentId = `Graph${Guid.create().toString()}`;
 
@@ -70,6 +74,19 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.scene.add(this.camera);
     }
 
+    setDefaultActions() {
+        this.defaultActions = new Map<string, IMenuAction>();
+        this.defaultActions.set(
+            "save",
+            {
+                text: "Save",
+                downloadName: "graph.png",
+                href: this.renderer.domElement.toDataURL('image/png'),
+                action: undefined
+            }
+        );
+    }
+
     draw() {
         this.props.graphData.nodes.forEach(
             (value, key, map) => this.drawNode(value, key)
@@ -98,6 +115,18 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
             let element = intersects[0].object as GraphElement;
             element.opt.onClickAction(element);
         }
+        this.setState({ ...this.state, displayMenu: false, menuLocation: undefined });
+    }
+
+    onClickDown(event: MouseEvent) {
+        let right = 2;
+        if (event.button === right) {
+            this.onRightClick(event);
+        }
+    }
+
+    onRightClick(event: MouseEvent) {
+        this.setState({ ...this.state, displayMenu: true, menuLocation: new Vector2(event.clientX, event.clientY) });
     }
 
     onMouseMove(event: MouseEvent) {
@@ -157,31 +186,35 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     componentDidMount() {
-        document.getElementById(this.componentId).append(this.renderer.domElement);
+        let component = document.getElementById(this.componentId);
+        component.append(this.renderer.domElement);
         this.setCanvasSize();
         this.designScene();
         this.draw();
         this.animate();
+        this.setDefaultActions();
     }
 
     componentWillUnmount() {
         this.renderer.domElement.remove();
     }
 
-    save() {
-        let link = document.createElement('a');
-        link.download = 'tgraph.png';
-        link.href = this.renderer.domElement.toDataURL('image/png');
-        link.click();
-    }
-
     render() {
+
         return <div
             className="graphCanvas"
             id={this.componentId}
             onClick={this.onClick.bind(this)}
+            onAuxClick={this.onClickDown.bind(this)}
             onMouseMove={this.onMouseMove.bind(this)}
         >
+            {
+                this.state.displayMenu ?
+                    < OptionMenu
+                        location={this.state.menuLocation}
+                        menuActionItems={mergeMaps(this.defaultActions, this.props.customMenuActions)} /> :
+                    null
+            }
         </div>;
     }
 
@@ -194,6 +227,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     componentId: string | undefined;
     selectedElement: GraphElement | undefined = undefined;
     canvasSize: Vector2;
+    defaultActions: Map<string, IMenuAction>;
 }
 
 

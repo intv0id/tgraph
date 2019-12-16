@@ -5,3 +5,4 @@ export * from "./types/MeshParameters";
 export * from "./types/Shaders";
 
 export * from "./reactComponents/GraphComponent";
+export * from "./reactComponents/OptionMenu";
