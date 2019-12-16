@@ -9,7 +9,7 @@ body {
   font-family: Helvetica, sans-serif;
   font-size: 16px;
   width: 100%;
-  margin: 0px;
+  margin: 0;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -105,8 +105,8 @@ body {
 
 #panel {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: rgba(211, 211, 211, 0.548);
@@ -145,7 +145,7 @@ body {
   margin: 10px;
   vertical-align: middle;
   cursor: pointer;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   position: absolute;
 }
