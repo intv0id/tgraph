@@ -52,6 +52,9 @@ export class githubConnections {
         let vertices: Vertex<IFollowsData>[] = [];
 
         let rootNode = await this.getUserData(<IRequest>{ UserName: options.ghUserName });
+        if(!rootNode.hasOwnProperty("id")){
+            throw new GithubRetrievalError("Can't find user", options.ghUserName);
+        }
         nodes.set(rootNode.id.toString(), new Node<IUserData>(rootNode.login, rootNode.id.toString(), rootNode, this.rootNodeParams));
 
         let accountToGetFollowersList: IFollowsQuery[] = [{login: rootNode.login, id: rootNode.id.toString(), level: 0}];
@@ -99,3 +102,12 @@ export class githubConnections {
     nodeParams: MeshParameters<IGithubData>;
     vertexParams: MeshParameters<IRelationData>;
 }
+
+export class GithubRetrievalError extends Error {
+    constructor(m: string, login: string) {
+        super(m);
+        this.login = login;
+    }
+
+    readonly login: string;
+};

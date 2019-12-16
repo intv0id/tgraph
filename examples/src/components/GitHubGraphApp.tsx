@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { GraphParameters } from '../../../src/types/GraphParameters';
-import { githubConnections, IGithubData, IRelationData, IUserData, IUserGraphContract } from '../githubTraversal';
+import { githubConnections, IGithubData, IRelationData, IUserData, IUserGraphContract, GithubRetrievalError } from '../githubTraversal';
 import GraphCanvas from '../../../src/reactComponents/GraphComponent';
 import { Graph } from '../../../src/types/Graph';
 import { Node, GraphElement } from '../../../src/types/GraphComponents';
@@ -9,8 +9,12 @@ import { ShaderTypes, MeshParameters } from '../../../src';
 import { AccountOverview } from './AccountOverview';
 import { AccountFullView } from './AccountFullView';
 import { Vector2 } from 'three';
+import {HelpPanel} from './HelpPanel'
+import {SearchPanel} from './SearchPanel'
+import { PanelKinds } from '../panels';
 
 export interface IAppState {
+    displayPanel: PanelKinds;
     ghLogin: string,
     graphData: Graph<IGithubData, IRelationData>,
     selectedElement: GraphElement,
@@ -61,6 +65,14 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
         await this.setGraphData(this.state.ghLogin);
     }
 
+    displayPanel(panelType: PanelKinds){
+        this.setState({...this.state, displayPanel: panelType})
+    }
+    
+    hidePanel(){
+        this.setState({...this.state, displayPanel: PanelKinds.NONE})
+    }
+
     render() {
         let hoverInfos = null;
         if (this.state.selectedElement && this.state.selectedElement.name) {
@@ -75,17 +87,22 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
             rootNodeInfos = <AccountFullView account={rootNode as Node<IUserData>} />;
         }
         return (
+            
             <div
                 id="GraphApp"
                 onMouseMove={(e) => { this.mouseLocation = new Vector2(e.clientX, e.clientY) }} >
+
+                {(this.state.displayPanel == PanelKinds.HELP) ? <HelpPanel hide={this.hidePanel.bind(this)}/> : null}
+                {(this.state.displayPanel == PanelKinds.SEARCH) ? <SearchPanel hide={this.hidePanel.bind(this)} updateGithubLogin={this.setGraphData.bind(this)}/> :  null}
 
                 <div className='titleBar'>
                     <h1>Github relations finder</h1>
                 </div>
 
                 <div className="buttons">
+                    <span className="searchButton" title="Search a github user" onClick={() => this.displayPanel(PanelKinds.SEARCH)}>🔎</span>
                     <span className="githubButton" title="Discover tgraph on Github" onClick={() => window.location.href="https://github.com/intv0id/tgraph"}>{"</>"}</span>
-                    <span className="helpButton" title="Help">?</span>
+                    <span className="helpButton" title="Help" onClick={() => this.displayPanel(PanelKinds.HELP)}>?</span>
                 </div>
 
                 <GraphCanvas<IGithubData, IRelationData>
@@ -128,6 +145,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
         )
     );
     readonly state: IAppState = {
+        displayPanel: PanelKinds.NONE,
         ghLogin: "intv0id",
         graphData: new Graph(new Map<string, Node<IGithubData>>(), []),
         selectedElement: undefined,
