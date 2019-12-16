@@ -38,8 +38,6 @@ export class OptionMenu extends Component<IOptionMenuProps> {
                 {
                     Array.from(this.props.menuActionItems.entries()).map(this.actionToElement.bind(this))
                 }
-
-
             </ul>
         </div>
     }

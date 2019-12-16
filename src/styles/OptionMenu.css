@@ -4,9 +4,10 @@
     border: 1px;
     border-style: solid;
     border-radius: 2px;
+    text-align: center;
 }
 
-.menuList { 
+.menuList {
     list-style: none;
     padding: 0px;
     width: 100%;
@@ -15,7 +16,8 @@
 
 .menuItem {
     margin: 5px;
-    width: 100%
+    width: calc(100%);
+    text-align: left;
 }
 
 .menuItem:hover {

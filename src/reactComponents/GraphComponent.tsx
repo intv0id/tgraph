@@ -74,7 +74,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.scene.add(this.camera);
     }
 
-    setDefaultActions() {
+    setMenuDefaults() {
         this.defaultActions = new Map<string, IMenuAction>();
         this.defaultActions.set(
             "save",
@@ -85,6 +85,9 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
                 action: undefined
             }
         );
+        document.addEventListener('click', () => {
+            this.setState({...this.state, displayMenu: false, menuLocation: undefined});
+        });
     }
 
     draw() {
@@ -115,7 +118,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
             let element = intersects[0].object as GraphElement;
             element.opt.onClickAction(element);
         }
-        this.setState({ ...this.state, displayMenu: false, menuLocation: undefined });
+        this.setState({ ...this.state });
     }
 
     onClickDown(event: MouseEvent) {
@@ -150,6 +153,10 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
             let element = this.selectedElement;
             element.material = element.opt.material;
             element.material.needsUpdate = true;
+            if (element instanceof Vertex && element.arrow){
+                element.arrow.material = element.opt.material;
+                element.arrow.material.needsUpdate = true;
+            }
             element.opt.onExitHover(element);
         }
         this.selectedElement = undefined;
@@ -158,6 +165,10 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     selectElement(element: GraphElement) {
         element.material = element.opt.hoverMaterial;
         element.material.needsUpdate = true;
+        if (element instanceof Vertex && element.arrow){
+            element.arrow.material = element.opt.hoverMaterial;
+            element.arrow.material.needsUpdate = true;
+        }
         this.selectedElement = element;
         element.opt.onEnterHover(element);
     }
@@ -192,7 +203,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.designScene();
         this.draw();
         this.animate();
-        this.setDefaultActions();
+        this.setMenuDefaults();
     }
 
     componentWillUnmount() {
