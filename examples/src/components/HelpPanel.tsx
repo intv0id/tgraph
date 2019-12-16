@@ -14,7 +14,7 @@ export class HelpPanel extends Component<IBasePanelProps> {
                 </div>
                 <div>
                     <h3>Legend</h3>
-                    TO BE DONE
+                    IN PROGRESS
                 </div>
             </div>
         </BasePanel>
