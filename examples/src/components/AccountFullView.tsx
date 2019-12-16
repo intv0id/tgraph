@@ -47,7 +47,7 @@ export class AccountFullView extends Component<IAccountFullViewProps, IAccountFu
                     <p><q>{this.props.account.data.bio}</q></p> :
                     null
             }
-            <p>
+            <p className="githubFigures">
                 {this.props.account.data.followers} 🔼
                 {"   "}
                 {this.props.account.data.following} 🔽

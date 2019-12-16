@@ -63,7 +63,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
 
     render() {
         let hoverInfos = null;
-        if (this.state.selectedElement && this.state.selectedElement.name){
+        if (this.state.selectedElement && this.state.selectedElement.name) {
             hoverInfos = <AccountOverview
                 account={this.state.selectedElement as Node<IUserData>}
                 mouseLocation={this.mouseLocation}
@@ -71,16 +71,31 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
         }
         let rootNode = this.state.graphData.nodes.get(this.state.rootNodeId);
         let rootNodeInfos = null;
-        if (rootNode){
-            rootNodeInfos = <AccountFullView account={rootNode as Node<IUserData>}/>;
+        if (rootNode) {
+            rootNodeInfos = <AccountFullView account={rootNode as Node<IUserData>} />;
         }
-        return <div id="GraphApp" onMouseMove={(e) => {this.mouseLocation
-        = new Vector2(e.clientX, e.clientY)}}>
-            <GraphCanvas<IGithubData, IRelationData> graphData={this.state.graphData} graphParams={this.props.graphParams} />
-            {rootNodeInfos}
-            <br/>
-            {hoverInfos}
-        </div>;
+        return (
+            <div
+                id="GraphApp"
+                onMouseMove={(e) => { this.mouseLocation = new Vector2(e.clientX, e.clientY) }} >
+
+                <div className='titleBar'>
+                    <h1>Github relations finder</h1>
+                    <a href="https://github.com/intv0id/tgraph" className="githubLink">
+                        <img
+                            src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+                            alt="tgraph on GitHub" />
+                    </a>
+                </div>
+
+                <GraphCanvas<IGithubData, IRelationData>
+                    graphData={this.state.graphData}
+                    graphParams={this.props.graphParams} />
+
+                {rootNodeInfos}
+                <br />
+                {hoverInfos}
+            </div>);
     }
 
     readonly graphGetter: githubConnections = new githubConnections(
@@ -109,7 +124,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
             ShaderTypes.BASIC,
             this.setSelectedElement.bind(this),
             this.unSetSelectedElement.bind(this),
-            (n) => {},
+            (n) => { },
         )
     );
     readonly state: IAppState = {

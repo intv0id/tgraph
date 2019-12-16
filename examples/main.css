@@ -9,23 +9,31 @@ body {
   font-family: Helvetica, sans-serif;
   font-size: 16px;
   width: 100%;
+  margin: 0px;
   -webkit-overflow-scrolling: touch;
 }
 
-h1 {
+.titleBar {
+  float: right;
+  width: calc(75% - 40px);
+  background-color: lavender;
+}
+
+.titleBar>h1 {
+  text-align: center;
   font-size: 28px;
   margin-bottom: 14px;
 }
 
-.AccountFullView {
-  background-color: rgba(255, 206, 116, 0.8);
-  padding: 10px;
-  width: 25%;
-  height: 100%;
-  position: absolute;
-  bottom:5;
-  left:5;
-  overflow: scroll;
+.titleBar>.githubLink{
+  position: fixed;
+  top:0px;
+  right:0px;
+  border: 0;
+}
+
+.titleBar>.githubLink>img {
+  height: 80px;
 }
 
 #GraphApp, #app {
@@ -34,14 +42,23 @@ h1 {
 }
 
 .graphCanvas {
-  width: 75%;
+  width: calc(75% - 40px);
   height: 100%;
   float: right;
 }
 
 .AccountOverview {
-  background-color: rgba(255, 238, 0, 0.8);
+  background-color: rgba(230, 230, 250, 0.8);
   position: absolute;
+}
+
+.AccountFullView {
+  background-color: lavender;
+  padding: 20px;
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  overflow: scroll;
 }
 
 .AccountFullView>h2.accountLogin {
@@ -53,4 +70,9 @@ h1 {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.githubFigures {
+  text-align: center;
+  font-weight: bold;
 }
