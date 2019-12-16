@@ -150,7 +150,55 @@ body {
   position: absolute;
 }
 
-@media (max-width: 1024px) {
+
+@media (max-aspect-ratio: 1/1) {
+
+  .titleBar {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+  }
+
+  .graphCanvas {
+    width: 100%;
+    height: 66%;
+  }
+
+  .AccountFullView { 
+    bottom: 0;
+    width: 100%;
+    height: 34%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .AccountFullView> img.avatar {
+    float:left;
+    left: 0;
+    top: 0;
+  }
+
+  .AccountFullView> h2 {
+    display: none;
+  }
+
+  .AccountFullView>p {
+    width: calc(100%-20px);
+    margin: 10px 25px;
+  }
+
+  .AccountFullView>p>b {
+    margin: 0 5px;
+  }
+
+  .buttons {
+    z-index: 100;
+    bottom: 50%;
+  }
+
+}
+
+@media (max-width: 500px) {
 
   .titleBar {
     position: absolute;
