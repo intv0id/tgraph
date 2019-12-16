@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Component, useEffect } from 'react';
+import { Component } from 'react';
 import { Guid } from "guid-typescript";
 import { Graph } from '../types/Graph';
 import { GraphParameters } from '../types/GraphParameters';
-import { Node, Vertex, IGraphComponent, GraphElement } from '../types/GraphComponents';
+import { Node, Vertex, GraphElement } from '../types/GraphComponents';
 import { Scene, HemisphereLight, DirectionalLight, Camera, PerspectiveCamera, WebGLRenderer, Vector2, Raycaster, Intersection } from 'three';
 import * as TrackballControls from "three-trackballcontrols";
 
@@ -66,6 +66,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
         this.camera.add(this.directionalLight);
 
         this.scene = new Scene();
+        this.scene.autoUpdate = true;
         this.scene.add(this.camera);
     }
 
@@ -78,8 +79,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
     }
 
     undraw() {
-        this.scene.children.forEach(c => this.scene.remove(c));
-        this.scene.autoUpdate = true;
+        this.scene.children = [this.camera];
     }
 
     animate() {
