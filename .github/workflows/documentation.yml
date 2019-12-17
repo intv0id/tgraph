@@ -23,6 +23,7 @@ jobs:
       - name: build documentation
         run: |
           npm install -D
+          npm run build --if-present
           npx typedoc --out docs src
           cp -r examples dist ressources docs/
           touch docs/.nojekyll
@@ -31,6 +32,7 @@ jobs:
 
       - name: deploy documentation
         uses: JamesIves/github-pages-deploy-action@releases/v3
+        if: ${{github.ref == master}}
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: master
