@@ -1,9 +1,6 @@
 name: Documentation
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   build:
@@ -32,7 +29,7 @@ jobs:
 
       - name: deploy documentation
         uses: JamesIves/github-pages-deploy-action@releases/v3
-        if: ${{github.ref == master}}
+        if: github.ref == 'refs/heads/master'
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: master
