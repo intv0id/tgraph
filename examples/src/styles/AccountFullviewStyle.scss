@@ -1,0 +1,84 @@
+.AccountFullView {
+  background-color: lavender;
+  padding: 20px;
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  overflow: scroll;
+}
+
+.AccountFullView > h2.accountLogin {
+  text-align: center;
+}
+
+.AccountFullView > img.avatar {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.githubFigures {
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .AccountFullView {
+    bottom: 0;
+    width: 100%;
+    height: 34%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .AccountFullView > img.avatar {
+    float: left;
+    left: 0;
+    top: 0;
+  }
+
+  .AccountFullView > h2 {
+    display: none;
+  }
+
+  .AccountFullView > p {
+    width: calc(100%-20px);
+    margin: 10px 25px;
+  }
+
+  .AccountFullView > p > b {
+    margin: 0 5px;
+  }
+}
+
+@media (max-width: 500px) {
+  .AccountFullView {
+    bottom: 0;
+    width: 100%;
+    height: 34%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .AccountFullView > img.avatar {
+    float: left;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+  }
+
+  .AccountFullView > h2 {
+    display: none;
+  }
+
+  .AccountFullView > p {
+    width: calc(100%-20px);
+    margin: 4px 10px;
+  }
+
+  .AccountFullView > p > b {
+    margin: 0 5px;
+  }
+}
