@@ -105,9 +105,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".menuContainer {\n  background-color: rgba(172, 172, 172, 0.3);\n  padding: 0;\n  border: 1px;\n  border-style: solid;\n  border-radius: 2px;\n  text-align: center;\n}\n\n.menuList {\n  list-style: none;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.menuItem {\n  margin: 5px;\n  width: calc(100%);\n  text-align: left;\n}\n\n.menuItem:hover {\n  background-color: ivory;\n}\n\n.menuLinkAction {\n  color: black;\n  font-size: 1.3em;\n  font-weight: bold;\n  text-decoration: none;\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -53252,6 +53254,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!./MenuStyles.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/MenuStyles.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];

@@ -571,6 +571,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./AccountFullviewStyle.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./examples/src/styles/AccountFullviewStyle.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];
@@ -598,6 +599,7 @@ if (content.locals) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./AccountOverviewStyle.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./examples/src/styles/AccountOverviewStyle.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];
@@ -625,6 +627,7 @@ if (content.locals) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./AppStyle.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./examples/src/styles/AppStyle.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];
@@ -652,6 +655,7 @@ if (content.locals) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./ButtonNavStyle.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./examples/src/styles/ButtonNavStyle.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];
@@ -679,6 +683,7 @@ if (content.locals) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./PanelStyle.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./examples/src/styles/PanelStyle.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];
@@ -707,9 +712,11 @@ if (content.locals) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".AccountFullView {\n  background-color: lavender;\n  padding: 20px;\n  width: 25%;\n  height: 100%;\n  position: absolute;\n  overflow: scroll;\n}\n\n.AccountFullView > h2.accountLogin {\n  text-align: center;\n}\n\n.AccountFullView > img.avatar {\n  width: 50%;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.githubFigures {\n  text-align: center;\n  font-weight: bold;\n}\n\n@media (max-aspect-ratio: 1/1) {\n  .AccountFullView {\n    bottom: 0;\n    width: 100%;\n    height: 34%;\n    padding: 0;\n    text-align: left;\n  }\n\n  .AccountFullView > img.avatar {\n    float: left;\n    left: 0;\n    top: 0;\n  }\n\n  .AccountFullView > h2 {\n    display: none;\n  }\n\n  .AccountFullView > p {\n    width: calc(100%-20px);\n    margin: 10px 25px;\n  }\n\n  .AccountFullView > p > b {\n    margin: 0 5px;\n  }\n}\n@media (max-width: 500px) {\n  .AccountFullView {\n    bottom: 0;\n    width: 100%;\n    height: 34%;\n    padding: 0;\n    text-align: left;\n  }\n\n  .AccountFullView > img.avatar {\n    float: left;\n    left: 0;\n    top: 0;\n    width: 100px;\n    height: 100px;\n  }\n\n  .AccountFullView > h2 {\n    display: none;\n  }\n\n  .AccountFullView > p {\n    width: calc(100%-20px);\n    margin: 4px 10px;\n  }\n\n  .AccountFullView > p > b {\n    margin: 0 5px;\n  }\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -723,9 +730,11 @@ exports.push([module.i, ".AccountFullView {\n  background-color: lavender;\n  pa
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".AccountOverview {\n  background-color: rgba(230, 230, 250, 0.8);\n  position: absolute;\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -739,9 +748,11 @@ exports.push([module.i, ".AccountOverview {\n  background-color: rgba(230, 230, 
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, "html,\nbody {\n  height: 100%;\n  overflow: hidden;\n}\n\nbody {\n  background: #fff;\n  color: #222;\n  font-family: Helvetica, sans-serif;\n  font-size: 16px;\n  width: 100%;\n  margin: 0;\n  -webkit-overflow-scrolling: touch;\n}\n\n.titleBar {\n  float: right;\n  width: calc(75% - 40px);\n  background-color: lavender;\n}\n\n.titleBar > h1 {\n  text-align: center;\n  font-size: 28px;\n  margin-bottom: 14px;\n}\n\n#GraphApp,\n#app {\n  height: 100%;\n  width: 100%;\n}\n\n.graphCanvas {\n  width: calc(75% - 40px);\n  height: 100%;\n  float: right;\n}\n\n@media (max-aspect-ratio: 1/1) {\n  .titleBar {\n    position: absolute;\n    z-index: -1;\n    width: 100%;\n  }\n\n  .graphCanvas {\n    width: 100%;\n    height: 66%;\n  }\n}\n@media (max-width: 500px) {\n  .titleBar {\n    position: absolute;\n    z-index: -1;\n    width: 100%;\n  }\n\n  .titleBar > h1 {\n    font-size: 20px;\n  }\n\n  .graphCanvas {\n    width: 100%;\n    height: 66%;\n  }\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -755,9 +766,11 @@ exports.push([module.i, "html,\nbody {\n  height: 100%;\n  overflow: hidden;\n}\
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".buttons {\n  width: 94px;\n  position: absolute;\n  bottom: 35px;\n  right: 35px;\n}\n\n.buttons > div {\n  height: 74px;\n  width: 74px;\n  text-align: center;\n  font-size: 40px;\n  font-weight: bolder;\n  color: ivory;\n  background-color: rgba(255, 0, 0, 0.8);\n  border-radius: 38px;\n  display: inline-block;\n  border-style: solid;\n  border-width: 1px;\n  border-color: #e51c23;\n  margin: 10px;\n  cursor: pointer;\n}\n\n.buttons > div:hover {\n  background-color: black;\n  border-color: gray;\n}\n\n.buttons > div > span {\n  vertical-align: middle;\n}\n\n.helpButton {\n  cursor: help;\n}\n\n@media (max-aspect-ratio: 1/1) {\n  .buttons {\n    z-index: 100;\n    bottom: 50%;\n  }\n}\n@media (max-width: 500px) {\n  .buttons {\n    width: 50px;\n    bottom: 15px;\n    right: 15px;\n    z-index: 100;\n    bottom: 50%;\n  }\n\n  .buttons > div {\n    height: 45px;\n    width: 45px;\n    font-size: 30px;\n    margin: 5px;\n  }\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -771,9 +784,11 @@ exports.push([module.i, ".buttons {\n  width: 94px;\n  position: absolute;\n  bo
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, "#panel {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  background-color: rgba(211, 211, 211, 0.548);\n  z-index: 100;\n  text-align: center;\n  vertical-align: middle;\n}\n\n#panel > div {\n  padding: 5%;\n  margin: 10%;\n  background-color: azure;\n}\n\n#searchPanel {\n  width: min-content;\n  display: inline-block;\n}\n\n#searchPanel > p.error {\n  font-size: small;\n  color: red;\n}\n\n#helpPanel {\n  text-align: justify;\n}\n\n#panel > .exit {\n  height: 74px;\n  width: 74px;\n  text-align: center;\n  font-size: 40px;\n  font-weight: bolder;\n  display: inline-block;\n  margin: 10px;\n  vertical-align: middle;\n  cursor: pointer;\n  top: 0;\n  right: 0;\n  position: absolute;\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -787,9 +802,11 @@ exports.push([module.i, "#panel {\n  position: absolute;\n  top: 0;\n  left: 0;\
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = module.exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".menuContainer {\n  background-color: rgba(172, 172, 172, 0.3);\n  padding: 0;\n  border: 1px;\n  border-style: solid;\n  border-radius: 2px;\n  text-align: center;\n}\n\n.menuList {\n  list-style: none;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.menuItem {\n  margin: 5px;\n  width: calc(100%);\n  text-align: left;\n}\n\n.menuItem:hover {\n  background-color: ivory;\n}\n\n.menuLinkAction {\n  color: black;\n  font-size: 1.3em;\n  font-weight: bold;\n  text-decoration: none;\n}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -83171,6 +83188,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!./MenuStyles.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/MenuStyles.scss");
+content = content.__esModule ? content.default : content;
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];
