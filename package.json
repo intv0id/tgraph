@@ -35,6 +35,9 @@
     "type": "git",
     "url": "git+https://github.com/intv0id/tgraph.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "Clément Trassoudaine",
   "license": "MIT",
   "bugs": {
