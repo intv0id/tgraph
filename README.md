@@ -2,7 +2,7 @@
 
 <img src="ressources/tgraphLogo.png" width="150">
 
-## A typescript library for drawing 3D graphs
+## A react component written in typescript for rendering 3D graphs
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][npm-downloads]][npm-url]
