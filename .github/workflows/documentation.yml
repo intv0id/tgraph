@@ -15,10 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-<<<<<<< HEAD
-=======
-
->>>>>>> renamed github builds
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
