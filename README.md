@@ -7,6 +7,8 @@
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
+[![Build Status][build-action-image]][build-action-url]
+[![Documentation Status][doc-action-image]][doc-action-url]
 [![CodeFactor][codefactor-image]][codefactor-url]
 
 This module aims at drawing an interactive and modular representation of information networks.
@@ -40,6 +42,10 @@ This module is based on the [jgraph][jgraph] work and is under the MIT License.
 [npm-url]: https://www.npmjs.com/package/tgraph
 [travis-url]: https://travis-ci.org/intv0id/tgraph
 [travis-image]: https://travis-ci.org/intv0id/tgraph.svg?branch=master
+[build-action-url]: https://github.com/intv0id/tgraph/actions?query=workflow%3A%22Build%22
+[build-action-image]: https://github.com/intv0id/tgraph/workflows/Build/badge.svg
+[doc-action-url]: https://github.com/intv0id/tgraph/actions?query=workflow%3A%22Documentation%22
+[doc-action-image]: https://github.com/intv0id/tgraph/workflows/Documentation/badge.svg
 [codefactor-url]: https://www.codefactor.io/repository/github/intv0id/tgraph
 [codefactor-image]: https://www.codefactor.io/repository/github/intv0id/tgraph/badge
 
