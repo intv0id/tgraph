@@ -2,14 +2,13 @@ import * as React from 'react';
 import { Component } from 'react';
 import { IUserData } from '../githubTraversal';
 import { Node } from '../../../src/types/GraphComponents';
-
-export interface IAccountFullViewState { }
+import "../styles/AccountFullviewStyle.scss";
 
 export interface IAccountFullViewProps {
     account: Node<IUserData>
 }
 
-export class AccountFullView extends Component<IAccountFullViewProps, IAccountFullViewState>{
+export class AccountFullView extends Component<IAccountFullViewProps>{
     render() {
         return <div className="AccountFullView">
             <h2 className="accountLogin">

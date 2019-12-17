@@ -19,6 +19,8 @@
   },
   "devDependencies": {
     "css-loader": "^3.3.2",
+    "sass": "^1.23.7",
+    "sass-loader": "^8.0.0",
     "style-loader": "^1.0.1",
     "ts-loader": "^6.2.1",
     "typedoc": "^0.14.2",

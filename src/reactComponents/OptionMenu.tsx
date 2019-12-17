@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Vector2 } from 'three';
 import { IMenuAction } from '../types/MenuAction';
-import "../styles/OptionMenu.css";
+import "../styles/MenuStyles.scss";
 
 export interface IOptionMenuProps {
     location: Vector2,
