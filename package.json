@@ -35,15 +35,12 @@
     "type": "git",
     "url": "git+https://github.com/intv0id/tgraph.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "author": "Clément Trassoudaine",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/intv0id/tgraph/issues"
   },
-  "homepage": "https://github.com/intv0id/tgraph#readme",
+  "homepage": "https://github.com/intv0id/tgraph",
   "keywords": [
     "3D",
     "graph",
