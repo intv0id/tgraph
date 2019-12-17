@@ -18,11 +18,14 @@
     },
     "include": [
         "src/*.ts",
-        "src/*.tsx", 
-        "src/types/*.ts", 
+        "src/*.tsx",
+        "src/types/*.ts",
         "src/components/*.tsx",
+        "src/styles/*.scss",
         "examples/src/*.ts",
-        "examples/src/*.tsx", "examples/src/components/GitHubGraphApp.tsx", "examples/src/components/github.tsx",
+        "examples/src/*.tsx",
+        "examples/src/components/*.tsx",
+        "examples/src/styles/*.scss",
     ],
     "exclude": [
         "node_modules",

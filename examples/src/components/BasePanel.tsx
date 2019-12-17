@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import * as React from 'react';
+import "../styles/PanelStyle.scss";
 
 export interface IBasePanelProps {
     hide: () => void

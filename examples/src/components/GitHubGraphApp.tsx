@@ -13,6 +13,8 @@ import {HelpPanel} from './HelpPanel'
 import {SearchPanel} from './SearchPanel'
 import { PanelKinds } from '../panels';
 import { IMenuAction } from '../../../src/types/MenuAction';
+import "../styles/ButtonNavStyle.scss";
+import "../styles/AppStyle.scss";
 
 export interface IAppState {
     displayPanel: PanelKinds,

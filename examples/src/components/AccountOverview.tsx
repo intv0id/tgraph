@@ -4,15 +4,14 @@ import { IUserData } from '../githubTraversal';
 import { Node } from '../../../src/types/GraphComponents';
 import { Vector2 } from 'three';
 import { Guid } from 'guid-typescript';
-
-export interface IAccountDetailsState { }
+import "../styles/AccountOverviewStyle.scss";
 
 export interface IAccountDetailsProps {
     account: Node<IUserData>,
     mouseLocation: Vector2,
 }
 
-export class AccountOverview extends Component<IAccountDetailsProps, IAccountDetailsState>{
+export class AccountOverview extends Component<IAccountDetailsProps>{
 
     move(){
         let htmlElement = document.getElementById(this.componentId);

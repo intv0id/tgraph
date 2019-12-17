@@ -25,13 +25,17 @@ module.exports = {
         options: { allowTsInNodeModules: true },
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
       },
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css' ]
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss' ]
   },
   devtool: 'source-map',
 };
