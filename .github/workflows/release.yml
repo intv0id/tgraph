@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - name: update Typescript
         run: npm update -g typescript
       - name: Build
         run: |
