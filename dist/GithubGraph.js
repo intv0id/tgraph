@@ -334,7 +334,7 @@ class GithubGraphApp extends react_1.Component {
                     React.createElement("span", null, "</>")),
                 React.createElement("div", { className: "helpButton", title: "Help", onClick: () => this.displayPanel(panels_1.PanelKinds.HELP) },
                     React.createElement("span", null, "?"))),
-            React.createElement(GraphComponent_1.default, { graphData: this.state.graphData, graphParams: this.props.graphParams, customMenuActions: new Map() }),
+            React.createElement(GraphComponent_1.GraphCanvas, { graphData: this.state.graphData, graphParams: this.props.graphParams, customMenuActions: new Map() }),
             rootNodeInfos,
             React.createElement("br", null),
             hoverInfos));
@@ -84229,7 +84229,7 @@ class GraphCanvas extends react_1.Component {
             null);
     }
 }
-exports.default = GraphCanvas;
+exports.GraphCanvas = GraphCanvas;
 
 
 /***/ }),

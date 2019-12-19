@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { GraphParameters } from '../../../src/types/GraphParameters';
 import { githubConnections, IGithubData, IRelationData, IUserData, IUserGraphContract, GithubRetrievalError } from '../githubTraversal';
-import GraphCanvas from '../../../src/reactComponents/GraphComponent';
+import { GraphCanvas } from '../../../src/reactComponents/GraphComponent';
 import { Graph } from '../../../src/types/Graph';
 import { Node, GraphElement } from '../../../src/types/GraphComponents';
 import { ShaderTypes, MeshParameters } from '../../../src';

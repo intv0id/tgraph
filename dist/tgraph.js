@@ -54275,7 +54275,7 @@ class GraphCanvas extends react_1.Component {
             null);
     }
 }
-exports.default = GraphCanvas;
+exports.GraphCanvas = GraphCanvas;
 
 
 /***/ }),
