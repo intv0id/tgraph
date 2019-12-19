@@ -16,6 +16,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+        run: npm update -g typescript
       - name: npm install, build, and test
         run: |
           npm install -D
