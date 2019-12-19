@@ -11,7 +11,7 @@ export function makeMaterial(color: string, shaderType: ShaderTypes = ShaderType
     let material = null;
 
     let materialName = 'Mesh' + shaderType.charAt(0).toUpperCase() + shaderType.slice(1) + 'Material';
-    material = new THREE[materialName]({ color: colorInt });
+    material = new (THREE as any)[materialName]({ color: colorInt });
 
     material.needsUpdate = true;
     return material

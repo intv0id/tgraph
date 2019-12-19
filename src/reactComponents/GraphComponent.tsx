@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component } from 'react';
+import { Component, MouseEvent } from 'react';
 import { Guid } from "guid-typescript";
 import { Graph } from '../types/Graph';
 import { GraphParameters } from '../types/GraphParameters';
@@ -15,14 +15,14 @@ export interface IGraphCanvasProps<NodeDataType, VertexDataType> {
     graphParams: GraphParameters,
     customMenuActions: Map<string, IMenuAction>,
 };
-export interface IGraphCanvasState { displayMenu: boolean, menuLocation: Vector2 | undefined };
+export interface IGraphCanvasState { displayMenu: boolean, menuLocation: Vector2 };
 
 export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphCanvasProps<NodeDataType, VertexDataType>, IGraphCanvasState> {
 
-    constructor(props) {
+    constructor(props: IGraphCanvasProps<NodeDataType, VertexDataType>) {
         super(props);
 
-        this.state = { displayMenu: false, menuLocation: undefined };
+        this.state = { displayMenu: false, menuLocation: new Vector2() };
 
         this.componentId = `Graph${Guid.create().toString()}`;
 
@@ -54,7 +54,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
     setCanvasSize() {
         let htmlElement = document.getElementById(this.componentId);
-        this.canvasSize = new Vector2(htmlElement.clientWidth, htmlElement.clientHeight);
+        this.canvasSize = new Vector2(htmlElement?.clientWidth, htmlElement?.clientHeight);
     }
 
     designScene() {
@@ -86,11 +86,11 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
             }
         );
         document.addEventListener('click', () => {
-            this.setState({ ...this.state, displayMenu: false, menuLocation: undefined });
+            this.setState({ ...this.state, displayMenu: false });
         });
-        document.addEventListener('keyup', (e: MouseEvent) => {
+        document.addEventListener('keyup', (e: KeyboardEvent) => {
             if (e.which == 27) {
-                this.setState({ ...this.state, displayMenu: false, menuLocation: undefined });
+                this.setState({ ...this.state, displayMenu: false });
             }
         });
     }
@@ -203,7 +203,7 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
     componentDidMount() {
         let component = document.getElementById(this.componentId);
-        component.append(this.renderer.domElement);
+        component?.append(this.renderer.domElement);
         this.setCanvasSize();
         this.designScene();
         this.draw();
@@ -236,14 +236,14 @@ export default class GraphCanvas<NodeDataType, VertexDataType> extends Component
 
     light: HemisphereLight;
     directionalLight: DirectionalLight;
-    renderer: WebGLRenderer | undefined;
-    scene: Scene | undefined;
-    camera: Camera | undefined;
+    renderer: WebGLRenderer;
+    scene: Scene = new Scene();
+    camera: Camera = new Camera();
     controls: TrackballControls | undefined;
-    componentId: string | undefined;
+    componentId: string;
     selectedElement: GraphElement | undefined = undefined;
-    canvasSize: Vector2;
-    defaultActions: Map<string, IMenuAction>;
+    canvasSize: Vector2 = new Vector2();
+    defaultActions: Map<string, IMenuAction> = new Map<string, IMenuAction>();
 }
 
 

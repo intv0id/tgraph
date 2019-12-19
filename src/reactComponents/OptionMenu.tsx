@@ -16,11 +16,11 @@ export class OptionMenu extends Component<IOptionMenuProps> {
         return <li
             key={key}
             className={"menuItem"}
-            onClick={action.action ? (e) => { action.action(this.props.location); } : null}>
+            onClick={ (e) => { if(action.action){ action.action(this.props.location) } }}>
             {
                 action.href ?
                     <a
-                        href={action.href || null}
+                        href={action.href}
                         download={action.downloadName || null}
                         className={"menuLinkAction"} >
                         {action.text}
