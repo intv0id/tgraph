@@ -17,7 +17,7 @@ export interface IGraphCanvasProps<NodeDataType, VertexDataType> {
 };
 export interface IGraphCanvasState { displayMenu: boolean, menuLocation: Vector2 };
 
-export default class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphCanvasProps<NodeDataType, VertexDataType>, IGraphCanvasState> {
+export class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphCanvasProps<NodeDataType, VertexDataType>, IGraphCanvasState> {
 
     constructor(props: IGraphCanvasProps<NodeDataType, VertexDataType>) {
         super(props);
