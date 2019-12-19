@@ -4,7 +4,7 @@ import { BasePanel, IBasePanelProps } from './BasePanel';
 import { GithubRetrievalError } from '../githubTraversal';
 
 export interface ISearchPanelProps extends IBasePanelProps {
-    updateGithubLogin: (string) => void
+    updateGithubLogin: (login: string) => void
 }
 
 export interface ISearchPanelState {
@@ -41,7 +41,7 @@ export class SearchPanel extends Component<ISearchPanelProps, ISearchPanelState>
         </BasePanel>
     }
 
-    readonly state = {
+    readonly state: ISearchPanelState = {
         error: undefined
     };
 }

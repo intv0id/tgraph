@@ -20,7 +20,7 @@ export interface IAppState {
     displayPanel: PanelKinds,
     ghLogin: string,
     graphData: Graph<IGithubData, IRelationData>,
-    selectedElement: GraphElement,
+    selectedElement: GraphElement | undefined,
     rootNodeId: string | undefined,
 }
 
@@ -95,7 +95,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
                 mouseLocation={this.mouseLocation}
             />;
         }
-        let rootNode = this.state.graphData.nodes.get(this.state.rootNodeId);
+        let rootNode = this.state.rootNodeId ? this.state.graphData.nodes.get(this.state.rootNodeId) : undefined;
         let rootNodeInfos = null;
         if (rootNode) {
             rootNodeInfos = <AccountFullView account={rootNode as Node<IUserData>} />;
@@ -156,7 +156,7 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
             ShaderTypes.BASIC,
             this.setSelectedElement.bind(this),
             this.unSetSelectedElement.bind(this),
-            (n) => { },
+            (n: GraphElement) => { },
         )
     );
     readonly state: IAppState = {
@@ -166,5 +166,5 @@ export class GithubGraphApp extends Component<IAppProps, IAppState>{
         selectedElement: undefined,
         rootNodeId: undefined,
     };
-    mouseLocation: Vector2;
+    mouseLocation: Vector2 = new Vector2();
 }
