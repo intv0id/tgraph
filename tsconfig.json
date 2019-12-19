@@ -3,9 +3,10 @@
     "compilerOptions": {
         //"noImplicitAny": true,
         "declaration": true,
-        "outDir": "dist",
+        "outDir": "lib",
         //"strict": true,
-        "module": "amd",
+        "module": "commonjs",
+        "lib": [ "es2016", "dom" ],
         "sourceMap": true,
         "target": "es2016",
         "moduleResolution": "node",
