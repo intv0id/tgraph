@@ -1,6 +1,6 @@
 {
   "name": "tgraph",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "A typescript package for plotting 3D graphs.",
   "main": "./dist/tgraph.js",
   "types": "./lib/src/index.d.ts",
@@ -29,7 +29,7 @@
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "tsc && webpack -p"
   },
   "repository": {
     "type": "git",
