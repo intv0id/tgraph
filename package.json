@@ -1,6 +1,6 @@
 {
   "name": "tgraph",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "description": "A typescript package for plotting 3D graphs.",
   "main": "./lib/src/index",
   "types": "./lib/src/index.d.ts",
