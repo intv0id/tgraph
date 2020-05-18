@@ -29,7 +29,8 @@
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "build": "tsc && webpack -p"
+    "build": "tsc && webpack -p",
+    "build-dev": "webpack"
   },
   "repository": {
     "type": "git",

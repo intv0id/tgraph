@@ -202,8 +202,6 @@ export class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphC
     }
 
     componentDidMount() {
-        let component = document.getElementById(this.componentId);
-        component?.append(this.renderer.domElement);
         this.setCanvasSize();
         this.designScene();
         this.draw();
@@ -215,14 +213,24 @@ export class GraphCanvas<NodeDataType, VertexDataType> extends Component<IGraphC
         this.renderer.domElement.remove();
     }
 
-    render() {
+    setCanvasRef(canvas: HTMLElement){
+        if (!canvas)
+            return
+        
+        if(!canvas.contains(this.renderer.domElement))
+        {
+            canvas.appendChild(this.renderer.domElement);
+        }
+    }
 
+    render() {
         return <div
             className="graphCanvas"
             id={this.componentId}
             onClick={this.onClick.bind(this)}
             onAuxClick={this.onClickDown.bind(this)}
             onMouseMove={this.onMouseMove.bind(this)}
+            ref={this.setCanvasRef.bind(this)}
         >
             {
                 this.state.displayMenu ?
